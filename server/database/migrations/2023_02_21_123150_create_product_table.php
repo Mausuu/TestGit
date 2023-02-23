@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name_product',32);
             $table->float('price');
-            
+            $table->string('avatar');
            
             $table->timestamps();
         });
