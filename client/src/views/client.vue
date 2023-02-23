@@ -99,9 +99,5 @@ export default
 </script>
 
 <style scoped>
-body
-{
-    background: rgb(236,143,184);
-    background: radial-gradient(circle, rgba(236,143,184,1) 0%, rgba(255,255,255,1) 100%);
-}
+
 </style> 
