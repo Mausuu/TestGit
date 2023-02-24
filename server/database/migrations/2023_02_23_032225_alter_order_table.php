@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::table('order', function (Blueprint $table) {
             $table->unsignedBigInteger('id_users');
             $table->foreign('id_users')->references('id')->on('users');    
-            $table->unsignedBigInteger('id_cat');
-            $table->foreign('id_cat')->references('id')->on('category');  
+            $table->unsignedBigInteger('id_product');
+            $table->foreign('id_product')->references('id')->on('product');  
         });
     }
 

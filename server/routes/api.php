@@ -4,7 +4,7 @@ use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
- 
+use App\Http\Controllers\ProductController;
  
 
 /*
@@ -26,4 +26,8 @@ Route::get('/users', [UserController::class, 'index']);
 
 Route::get('/category',[CategoryController::class,'index']);
 Route::get('/category/{id}',[CategoryController::class,'show']);
+
+Route::get('/product',[ProductController::class,'index']);
+Route::get('/product/{id}',[ProductController::class,'show']);
+
 
