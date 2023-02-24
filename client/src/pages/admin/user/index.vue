@@ -29,7 +29,7 @@
                             
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody v-for="user of users">
                         <tr>
                             <td>
                                 <span class="custom-checkbox">
@@ -37,9 +37,9 @@
                                     <label for="checkbox1"></label>
                                 </span>
                             </td>
-                            <td>demo</td>
-                            <td>demo@mail.com</td>
-                            <td>anh.jpg</td>
+                            <td>{{user.name}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{user.avatar}}</td>
                             <td>
                                 <a  class="edit" data-toggle="modal"><i class="fa fa-plus" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                             </td>
@@ -152,3 +152,24 @@
         </div>
     </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      users: [],
+      errors: []
+    }
+  },
+
+  // lấy dữ liệu khi component được tạo thành công
+  created() {
+    axios.get(`http://127.0.0.1:8000/api/users`)
+    .then(response => {
+      this.users = response.data
+    })
+    .catch(e => {
+      this.errors.push(e)
+    })
+  }
+}
+</script>
