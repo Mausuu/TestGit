@@ -17,10 +17,8 @@ class ProductController extends Controller
         //
         $users = Product::
             join('category', 'product.cat_id', '=', 'category.id')
-           
             ->select(
                 'product.*', 
-    
                 'category.cat_name as name_cat'
                 )
             ->get();        
