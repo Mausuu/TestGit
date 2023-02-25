@@ -4,7 +4,8 @@ use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Models\Category;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +23,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::get('/user/{id}', [UserController::class, 'show']);
 Route::get('/users', [UserController::class, 'index']);
+Route::controller(UserController::class)->group(function(){
+    Route::post('login','login');
+});
 
 Route::get('/category',[CategoryController::class,'index'])->name('category.index');
 Route::get('/category/{id}',[CategoryController::class,'show'])->name('category.show');
 Route::post('/category',[CategoryController::class,'store'])->name('category.store');
 Route::get('/create-category',[CategoryController::class,'create'])->name('category.create');
 
+Route::get('/product',[ProductController::class,'index']);
+Route::get('/product/{id}',[ProductController::class,'show']);
+
+Route::get('/admin/{id}', [AdminController::class, 'show']);
+Route::get('/admin', [AdminController::class, 'index']);
