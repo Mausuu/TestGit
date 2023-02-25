@@ -74,11 +74,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data=$request->all();
-        $category =Category::find($id);
-        $category->cat_name=$data['catCake'];
-        $category->save();
-        return redirect()->route('category.index');
+        
     }
 
     /**
