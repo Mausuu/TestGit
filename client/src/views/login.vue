@@ -13,7 +13,7 @@
 			<input type="email" placeholder="Tên tài khoản :" />
 			<input type="password" placeholder="Mật khẩu :" />
 			<a href="#">Quên mật khẩu</a>
-			<button>Đăng nhập</button>
+			<button type="submit">Đăng nhập</button>
 		</form>
 	</div>
 	<div class="overlay-container">
@@ -30,5 +30,10 @@
 </template>
 
 <script>
+import { ref } from 'vue';
+import { reactive } from 'vue';
+import axios from 'axios'
 import '../assets/css/login.css'
+
+  let form = reactive
 </script>
