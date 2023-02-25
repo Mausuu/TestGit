@@ -1,5 +1,5 @@
 <template>
-  <div class="container-xl">
+    <div class="container-fluid">
         <div class="table-responsive">
             <div class="table-wrapper">
                 <div class="table-title">
@@ -8,7 +8,10 @@
                             <h2>Quản lý <b>khách hàng</b></h2>
                         </div>
                         <div class="col-sm-6">
-                            <a style="background-color:rgb(70,127,170)" class="btn btn-success" data-toggle="modal"><span>Thêm người dùng</span></a>
+                            <button style="background-color:rgb(70,127,170)" type="button" class="btn btn-primary"
+                                data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                Thêm khách hàng
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -26,7 +29,7 @@
                             <th>Ảnh đại diện</th>
                             <th>Sửa</th>
                             <th>Xóa</th>
-                            
+
                         </tr>
                     </thead>
                     <tbody v-for="user of users">
@@ -37,115 +40,99 @@
                                     <label for="checkbox1"></label>
                                 </span>
                             </td>
-                            <td>{{user.name}}</td>
-                            <td>{{user.email}}</td>
-                            <td>{{user.avatar}}</td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.avatar }}</td>
                             <td>
-                                <a  class="edit" data-toggle="modal"><i class="fa fa-plus" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <button style="background-color:rgb(70,127,170)" type="button" class="btn btn-primary"
+                                    data-bs-toggle="modal" data-bs-target="#staticBackdrop-edit">
+                                    Chỉnh sửa
+                                </button>
                             </td>
                             <td>
-                                <a  class="delete" data-toggle="modal"><i class="fa fa-times" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                <button style="background-color:rgb(70,127,170)" type="button" class="btn btn-primary"
+                                    data-bs-toggle="modal" data-bs-target="#staticBackdrop-delete">
+                                    Xóa
+                                </button>
                             </td>
                         </tr>
-                        
+
                     </tbody>
                 </table>
-               
-                    
+
+
             </div>
-        </div>        
+        </div>
     </div>
 
 
-    
-    <!-- Edit Modal HTML -->
-    <div id="addEmployeeModal" class="modal fade">
+    <!-- Add Modal HTML -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form>
-                    <div class="modal-header">						
-                        <h4 class="modal-title">Add Employee</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <div class="modal-header">
+                        <h4 class="modal-title">Thêm khách hàng</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">					
+                    <div class="modal-body">
                         <div class="form-group">
-                            <label>Name</label>
+                            <label>Tên khách hàng:</label>
                             <input type="text" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label>Email</label>
+                            <label>Địa chỉ email:</label>
                             <input type="email" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label>Address</label>
+                            <label>Mật khẩu khách hàng:</label>
                             <textarea class="form-control" required></textarea>
                         </div>
                         <div class="form-group">
-                            <label>Phone</label>
+                            <label>Ảnh</label>
                             <input type="text" class="form-control" required>
-                        </div>					
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                        <input type="submit" class="btn btn-success" value="Add">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-primary">Thêm khách hàng</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
     <!-- Edit Modal HTML -->
-    <div id="editEmployeeModal" class="modal fade">
+    <div class="modal fade" id="staticBackdrop-edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form>
-                    <div class="modal-header">						
-                        <h4 class="modal-title">Edit Employee</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <div class="modal-header">
+                        <h4 class="modal-title">Chỉnh sửa khách hàng</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">					
+                    <div class="modal-body">
                         <div class="form-group">
-                            <label>Name</label>
+                            <label>Tên khách hàng:</label>
                             <input type="text" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label>Email</label>
+                            <label>Địa chỉ email:</label>
                             <input type="email" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label>Address</label>
+                            <label>Mật khẩu khách hàng:</label>
                             <textarea class="form-control" required></textarea>
                         </div>
                         <div class="form-group">
-                            <label>Phone</label>
+                            <label>Ảnh</label>
                             <input type="text" class="form-control" required>
-                        </div>					
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                        <input type="submit" class="btn btn-info" value="Save">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Delete Modal HTML -->
-    <div id="deleteEmployeeModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form>
-                    <div class="modal-header">						
-                        <h4 class="modal-title">Delete Employee</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body">					
-                        <p>Are you sure you want to delete these Records?</p>
-                        <p class="text-warning"><small>This action cannot be undone.</small></p>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                        <input type="submit" class="btn btn-danger" value="Delete">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-primary">Chỉnh sửa khách hàng</button>
                     </div>
                 </form>
             </div>
@@ -154,22 +141,22 @@
 </template>
 <script>
 export default {
-  data() {
-    return {
-      users: [],
-      errors: []
-    }
-  },
+    data() {
+        return {
+            users: [],
+            errors: [],
+        };
+    },
 
-  // lấy dữ liệu khi component được tạo thành công
-  created() {
-    axios.get(`http://127.0.0.1:8000/api/users`)
-    .then(response => {
-      this.users = response.data
-    })
-    .catch(e => {
-      this.errors.push(e)
-    })
-  }
+    // lấy dữ liệu khi component được tạo thành công
+    created() {
+        axios.get(`http://127.0.0.1:8000/api/users`)
+            .then(response => {
+                this.users = response.data
+            })
+            .catch(e => {
+                this.errors.push(e)
+            })
+    }
 }
 </script>
