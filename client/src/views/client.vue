@@ -82,20 +82,16 @@
           </div>
         </div>
       </nav>        
-      <banner/>
-      <router-view></router-view>
+      
+        <router-view></router-view>
+
+     
 </template>
 
 <script>
-import banner from '../components/banner.vue';
+
 import '../assets/css/client.css';
-export default
-{
-    components:
-    {
-        banner,
-    }
-}
+
 </script>
 
 <style scoped>
