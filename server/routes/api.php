@@ -21,8 +21,14 @@ use App\Http\Controllers\AdminController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+//Route::get('/user/{id}', [UserController::class, 'show']);
+//$RECYCLE.BINRoute::get('/users', [UserController::class, 'index']);
 Route::get('/user/{id}', [UserController::class, 'show']);
-Route::get('/users', [UserController::class, 'index']);
+Route::get('/user', [UserController::class, 'index'])->name('user.index');
+
+Route::post('/user',[UserController::class,'store'])->name('user.store');
+Route::get('/create-user',[UserController::class,'create'])->name('users.create');
+
 Route::controller(UserController::class)->group(function(){
     Route::post('login','login');
 });
@@ -32,8 +38,13 @@ Route::get('/category/{id}',[CategoryController::class,'show'])->name('category.
 Route::post('/category',[CategoryController::class,'store'])->name('category.store');
 Route::get('/create-category',[CategoryController::class,'create'])->name('category.create');
 
-Route::get('/product',[ProductController::class,'index']);
-Route::get('/product/{id}',[ProductController::class,'show']);
+Route::get('/product',[ProductController::class,'index'])->name('product.index');
+Route::get('/product/{id}',[ProductController::class,'show'])->name('product.show');
+
+
+Route::post('/product',[ProductController::class,'store'])->name('product.store');
+Route::get('/create-product',[CategoryController::class,'create'])->name('product.create');
+
 
 Route::get('/admin/{id}', [AdminController::class, 'show']);
 Route::get('/admin', [AdminController::class, 'index']);

@@ -35,10 +35,7 @@ class ProductSeeder extends Seeder
                 "avatar"  => "pr3.jpg",
                 "cat_id"  =>"2",
             ]
-            //
-            
-           
-           
+            //        
         ]);
     }
 }

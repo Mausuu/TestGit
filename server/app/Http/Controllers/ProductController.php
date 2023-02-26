@@ -44,6 +44,13 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+        $user =new Product();
+        $user->name_product=$request->nameProduct;
+        $user->price=$request->priceProduct;
+        $user->avatar=$request->avatarProduct;
+        $user->cat_id=$request->idCategory;
+        $user->save();
+        return redirect()->route('product.index');
     }
 
     /**

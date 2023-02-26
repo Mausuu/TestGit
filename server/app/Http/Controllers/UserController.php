@@ -5,7 +5,7 @@ use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
    
@@ -13,12 +13,27 @@ class UserController extends Controller
     {
         return User::findOrFail($id);
     }
+    //
     public function index()
     {
         $users = User::
         select('*')
         ->get();        
         return response()->json($users);
+    }
+    public function store(Request $request)
+    {
+        //$table->string('name',32);
+           // $table->string('email',32)->unique();
+           // $table->string('password',50);
+           // $table->string('avatar',255);
+        $user =new User();
+        $user->name=$request->nameUser;
+        $user->email=$request->emailUser;
+        $user->password=Hash::make($request->passwordUser);
+        $user->avatar=$request->avatarUser;
+        $user->save();
+        return redirect()->route('user.index');
     }
 
     public function login(Request $request){
