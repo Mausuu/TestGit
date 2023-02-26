@@ -25,7 +25,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('category.home');
     }
 
     /**
@@ -36,7 +36,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category=new Category();
+        $category->cat_name=$request->nameCategory;
+        $category->save();
+        return redirect()->route('category.index');
     }
 
     /**
@@ -71,7 +74,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**
