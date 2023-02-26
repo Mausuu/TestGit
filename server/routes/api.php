@@ -46,5 +46,9 @@ Route::post('/product',[ProductController::class,'store'])->name('product.store'
 Route::get('/create-product',[CategoryController::class,'create'])->name('product.create');
 
 
-Route::get('/admin/{id}', [AdminController::class, 'show']);
-Route::get('/admin', [AdminController::class, 'index']);
+Route::get('/admin/{id}', [AdminController::class, 'show'])->name('admin.show');
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+
+Route::post('/admin',[AdminController::class,'store'])->name('admin.store');
+Route::get('/create-admin',[AdminController::class,'create'])->name('admin.create');
+route::delete('destroy/{id}', [AdminController::class, 'destroy']);
