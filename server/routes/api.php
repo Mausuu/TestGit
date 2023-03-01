@@ -35,8 +35,9 @@ Route::controller(UserController::class)->group(function(){
 
 Route::get('/category',[CategoryController::class,'index'])->name('category.index');
 Route::get('/category/{id}',[CategoryController::class,'show'])->name('category.show');
-Route::post('/category',[CategoryController::class,'store'])->name('category.store');
-Route::get('/create-category',[CategoryController::class,'create'])->name('category.create');
+Route::post('/add-category',[CategoryController::class,'store'])->name('category.store');
+Route::post('/delete-category/{id}',[CategoryController::class,'destroy'])->name('category.destroy');
+Route::post('/update-category/{id}',[CategoryController::class,'update'])->name('category.update');
 
 Route::get('/product',[ProductController::class,'index'])->name('product.index');
 Route::get('/product/{id}',[ProductController::class,'show'])->name('product.show');

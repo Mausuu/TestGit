@@ -14,8 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $product=Category::all();
-        return response()->json($product);
+        $category=Category::all();
+        return response()->json($category);
     }
 
     /**
@@ -25,7 +25,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('category.home');
+
     }
 
     /**
@@ -74,7 +74,11 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        $data=$request->all();
+        $category =Category::find($id);
+        $category->cat_name=$data['nameCategory'];
+        $category->save();
+        return redirect()->route('category.index');
     }
 
     /**
@@ -85,6 +89,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category =Category::find($id);
+        $category->delete();
+        return redirect()->route('category.index');
     }
 }
