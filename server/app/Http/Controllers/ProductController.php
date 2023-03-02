@@ -52,6 +52,17 @@ class ProductController extends Controller
         $user->save();
         return redirect()->route('product.index');
     }
+    public function update(Request $request, $id)
+    {
+        $data=$request->all();
+        $product =Product::find($id);
+        $product->name_product=$data['nameProduct'];
+        $product->price=$data['priceProduct'];
+        $product->avatar=$data['avatarProduct'];
+        $product->cat_id=$data['idCategory'];
+        $product->save();
+        return redirect()->route('product.index');
+    }
 
     /**
      * Display the specified resource.
@@ -83,10 +94,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    
         //
-    }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -94,8 +104,13 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    
+        //
+    
     public function destroy($id)
     {
-        //
+        $product =Product::find($id);
+        $product->delete();
+        return redirect()->route('product.index');
     }
 }

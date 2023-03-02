@@ -35,7 +35,23 @@ class UserController extends Controller
         $user->save();
         return redirect()->route('user.index');
     }
-
+    public function update(Request $request, $id)
+    {
+        $data=$request->all();
+        $user =User::find($id);
+        $user->name=$data['nameUser'];
+        $user->email=$data['emailUser'];
+        $user->password=Hash::make($data['passwordUser']);
+        $user->avatar=$data['avatarUser'];
+        $user->save();
+        return redirect()->route('user.index');
+    }
+    public function destroy($id)
+    {
+        $user =User::find($id);
+        $user->delete();
+        return redirect()->route('user.index');
+    }
     public function login(Request $request){
        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             $user = $request->user();

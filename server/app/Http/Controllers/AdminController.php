@@ -37,16 +37,22 @@ class AdminController extends Controller
         $admin->save();
         return redirect()->route('admin.index');
     }
+    public function update(Request $request, $id)
+    {
+        $data=$request->all();
+        $admin =Admin::find($id);
+        $admin->name=$data['nameAdmin'];
+        $admin->email=$data['emailAdmin'];
+        $admin->password=Hash::make($data['passwordAdmin']);
+        $admin->avatar=$data['avatarAdmin'];
+        $admin->save();
+        return redirect()->route('admin.index');
+    }
     public function destroy($id)
     {
-        if(Admin::find($id)){
-            Admin::destroy($id);
-            session()->flash('mess', 'đã xóa');
-        }
-        // }else{
-        //     session()->flash('mess', 'không thể xóa vì có  khách  hàng đã đặt');
-        // }
-        return redirect('');
+        $admin =Admin::find($id);
+        $admin->delete();
+        return redirect()->route('admin.index');
     }
-
+    
 }
