@@ -22,18 +22,24 @@ class ProductSeeder extends Seeder
             ["name_product" => "Cherry MX Blue",
             "price" =>  "100000",
             "avatar"  => "pr1.jpg",
-            "cat_id"  =>"1",],
+            "cat_id"  =>"1",
+            "detail"  => "aaaaaaa",
+            "quantity"  =>"10",],
             [            
                 "name_product" => "Cherry Mx Brown",
                 "price" =>  "200000",
                 "avatar"  => "pr2.jpg",
                 "cat_id"  =>"1",
+                "detail"  => "bbbbbb",
+                "quantity"  =>"10",
             ],
             [            
                 "name_product" => "Cherry Mx Pro",
                 "price" =>  "200000",
                 "avatar"  => "pr3.jpg",
                 "cat_id"  =>"2",
+                "detail"  => "cxcccccc",
+                "quantity"  =>"10",
             ]
             //        
         ]);

@@ -49,6 +49,8 @@ class ProductController extends Controller
         $user->price=$request->priceProduct;
         $user->avatar=$request->avatarProduct;
         $user->cat_id=$request->idCategory;
+        $user->detail=$request->detailProduct;
+        $user->quantity=$request->quantityProduct;
         $user->save();
         return redirect()->route('product.index');
     }
@@ -60,6 +62,8 @@ class ProductController extends Controller
         $product->price=$data['priceProduct'];
         $product->avatar=$data['avatarProduct'];
         $product->cat_id=$data['idCategory'];
+        $product->detail=$data['detailProduct'];
+        $product->quantity=$data['quantityProduct'];
         $product->save();
         return redirect()->route('product.index');
     }
