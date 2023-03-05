@@ -39,19 +39,19 @@ Route::controller(UserController::class)->group(function(){
 Route::get('/category',[CategoryController::class,'index'])->name('category.index');
 Route::get('/category/{id}',[CategoryController::class,'show'])->name('category.show');
 Route::post('/add-category',[CategoryController::class,'store'])->name('category.store');
-Route::post('/delete-category/{id}',[CategoryController::class,'destroy'])->name('category.destroy');
+Route::delete('/delete-category/{id}',[CategoryController::class,'destroy'])->name('category.destroy');
 Route::post('/update-category/{id}',[CategoryController::class,'update'])->name('category.update');
 
 Route::get('/product',[ProductController::class,'index'])->name('product.index');
 Route::get('/product/{id}',[ProductController::class,'show'])->name('product.show');
 Route::post('/add-product',[ProductController::class,'store'])->name('product.store');
 Route::post('/update-product/{id}',[ProductController::class,'update'])->name('product.update');
-Route::post('/delete-product/{id}',[ProductController::class,'destroy'])->name('product.destroy');
+Route::delete('/delete-product/{id}',[ProductController::class,'destroy'])->name('product.destroy');
 
 
 
 Route::get('/admin/{id}', [AdminController::class, 'show'])->name('admin.show');
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::post('/add-admin',[AdminController::class,'store'])->name('admin.store');
-Route::post('/delete-admin/{id}',[AdminController::class,'destroy'])->name('admin.destroy');
+Route::delete('/delete-admin/{id}',[AdminController::class,'destroy'])->name('admin.destroy');
 Route::post('/update-admin/{id}',[AdminController::class,'update'])->name('admin.update');

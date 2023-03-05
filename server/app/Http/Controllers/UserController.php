@@ -28,10 +28,10 @@ class UserController extends Controller
            // $table->string('password',50);
            // $table->string('avatar',255);
         $user =new User();
-        $user->name=$request->nameUser;
-        $user->email=$request->emailUser;
-        $user->password=Hash::make($request->passwordUser);
-        $user->avatar=$request->avatarUser;
+        $user->name=$request->name;
+        $user->email=$request->email;
+        $user->password=Hash::make($request->password);
+        $user->avatar=$request->avatar;
         $user->save();
         return redirect()->route('user.index');
     }

@@ -44,22 +44,22 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
-        $user =new Product();
-        $user->name_product=$request->nameProduct;
-        $user->price=$request->priceProduct;
-        $user->avatar=$request->avatarProduct;
-        $user->cat_id=$request->idCategory;
-        $user->save();
+        $product =new Product();
+        $product->name_product=$request->name_product;
+        $product->price=$request->price;
+        $product->avatar=$request->avatar;
+        $product->cat_id=$request->cat_id;
+        $product->save();
         return redirect()->route('product.index');
     }
     public function update(Request $request, $id)
     {
         $data=$request->all();
         $product =Product::find($id);
-        $product->name_product=$data['nameProduct'];
-        $product->price=$data['priceProduct'];
-        $product->avatar=$data['avatarProduct'];
-        $product->cat_id=$data['idCategory'];
+        $product->name_product=$data['name_product'];
+        $product->price=$data['price'];
+        $product->avatar=$data['avatar'];
+        $product->cat_id=$data['cat_id'];
         $product->save();
         return redirect()->route('product.index');
     }
@@ -110,7 +110,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product =Product::find($id);
-        $product->delete();
-        return redirect()->route('product.index');
+        return $product->delete();
+        
     }
 }

@@ -37,7 +37,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $category=new Category();
-        $category->cat_name=$request->nameCategory;
+        $category->cat_name=$request->cat_name;
         $category->save();
         return redirect()->route('category.index');
     }
@@ -72,13 +72,11 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id, Request $request)
     {
-        $data=$request->all();
-        $category =Category::find($id);
-        $category->cat_name=$data['nameCategory'];
-        $category->save();
-        return redirect()->route('category.index');
+        $product = Product::find($id);
+        $product->update($request->all());
+        return response()->json('Product updated!');
     }
 
     /**
@@ -90,7 +88,6 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category =Category::find($id);
-        $category->delete();
-        return redirect()->route('category.index');
+        return $category->delete();
     }
 }
