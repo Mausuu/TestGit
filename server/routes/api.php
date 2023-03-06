@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,7 @@ Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
 Route::get('/user', [UserController::class, 'index'])->name('user.index');
 Route::post('/add-user',[UserController::class,'store'])->name('user.store');
 Route::post('/update-user/{id}',[UserController::class,'update'])->name('user.update');
-Route::post('/delete-user/{id}',[UserController::class,'destroy'])->name('user.destroy');
+Route::delete('/delete-user/{id}',[UserController::class,'destroy'])->name('user.destroy');
 
 
 
@@ -55,3 +56,11 @@ Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::post('/add-admin',[AdminController::class,'store'])->name('admin.store');
 Route::delete('/delete-admin/{id}',[AdminController::class,'destroy'])->name('admin.destroy');
 Route::post('/update-admin/{id}',[AdminController::class,'update'])->name('admin.update');
+
+///Anh
+
+Route::get('/image',[ImageController::class,'index'])->name('image.index');
+Route::get('/image/{id}',[ImageController::class,'show'])->name('image.show');
+Route::post('/add-image',[ImageController::class,'store'])->name('image.store');
+Route::delete('/delete-image/{id}',[ImageController::class,'destroy'])->name('image.destroy');
+Route::post('/update-image/{id}',[ImageController::class,'update'])->name('image.update');

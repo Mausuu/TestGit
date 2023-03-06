@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
     /**
@@ -47,8 +48,20 @@ class ProductController extends Controller
         $user =new Product();
         $user->name_product=$request->nameProduct;
         $user->price=$request->priceProduct;
-        $user->avatar=$request->avatarProduct;
+
+        if($request['avatarProduct']){
+            $img=$request['avatarProduct'];
+            $nameImg=time().'_'.$img->getClientOriginalName();
+            Storage::disk('public')->put($nameImg,File::get($img));
+            $user->avatar=$nameImg;
+        }
+       else{
+            $user->avatar='default.jpg';
+       }
+
         $user->cat_id=$request->idCategory;
+        $user->detail=$request->detailProduct;
+        $user->quantity=$request->quantityProduct;
         $user->save();
         return redirect()->route('product.index');
     }
@@ -58,8 +71,21 @@ class ProductController extends Controller
         $product =Product::find($id);
         $product->name_product=$data['nameProduct'];
         $product->price=$data['priceProduct'];
-        $product->avatar=$data['avatarProduct'];
+        if($request['avatarProduct']){
+            Storage::disk('public')->delete($product->avatar);//
+            $img=$request['avatarProduct'];
+            $nameImg=time().'_'.$img->getClientOriginalName();
+            Storage::disk('public')->put($nameImg,File::get($img));
+            $product->avatar=$nameImg;
+        }
+       else{
+            $product->avatar='default.jpg';
+       }
+       
         $product->cat_id=$data['idCategory'];
+        $product->detail=$data['detailProduct'];
+        $product->quantity=$data['quantityProduct'];
+      
         $product->save();
         return redirect()->route('product.index');
     }
@@ -109,7 +135,9 @@ class ProductController extends Controller
     
     public function destroy($id)
     {
+
         $product =Product::find($id);
+        Storage::disk('public')->delete($product->avatar);//
         return $product->delete();
         
     }

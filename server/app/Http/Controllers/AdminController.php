@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 
@@ -33,7 +35,15 @@ class AdminController extends Controller
         $admin->name=$request->nameAdmin;
         $admin->email=$request->emailAdmin;
         $admin->password=Hash::make($request->passwordAdmin);
-        $admin->avatar=$request->avatarAdmin;
+        if($request['avatarAdmin']){
+            $img=$request['avatarAdmin'];
+            $nameImg=time().'_'.$img->getClientOriginalName();
+            Storage::disk('public')->put($nameImg,File::get($img));
+            $admin->avatar=$nameImg;
+        }
+       else{
+            $admin->avatar='default.jpg';
+       }
         $admin->save();
         return redirect()->route('admin.index');
     }
@@ -44,15 +54,31 @@ class AdminController extends Controller
         $admin->name=$data['nameAdmin'];
         $admin->email=$data['emailAdmin'];
         $admin->password=Hash::make($data['passwordAdmin']);
-        $admin->avatar=$data['avatarAdmin'];
+        if($request['avatarAdmin']){
+            Storage::disk('public')->delete($admin->avatar);//
+            $img=$request['avatarAdmin'];
+            $nameImg=time().'_'.$img->getClientOriginalName();
+            Storage::disk('public')->put($nameImg,File::get($img));
+            $admin->avatar=$nameImg;
+        }
+       else{
+            $admin->avatar='default.jpg';
+       }
         $admin->save();
         return redirect()->route('admin.index');
     }
     public function destroy($id)
     {
+      
         $admin =Admin::find($id);
+        Storage::disk('public')->delete($admin->avatar);
         $admin->delete();
         return redirect()->route('admin.index');
+
+        // $image=Image::find($id);
+        // Storage::disk('public')->delete($image->name);
+        // $image->delete();
+        // return redirect()->route('image.index');
     }
     
 }

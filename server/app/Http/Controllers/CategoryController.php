@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class CategoryController extends Controller
 {
@@ -74,11 +75,12 @@ class CategoryController extends Controller
      */
     public function update($id, Request $request)
     {
-        $product = Product::find($id);
-        $product->update($request->all());
-        return response()->json('Product updated!');
+        $data=$request->all();
+        $category =Category::find($id);
+        $category->cat_name=$data['nameCategory'];
+        $category->save();
+        return redirect()->route('category.index');
     }
-
     /**
      * Remove the specified resource from storage.
      *

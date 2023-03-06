@@ -6,6 +6,8 @@ use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
 {
    
@@ -31,8 +33,16 @@ class UserController extends Controller
         $user->name=$request->name;
         $user->email=$request->email;
         $user->password=Hash::make($request->password);
-        $user->avatar=$request->avatar;
-        $user->save();
+        if($request['avatarUser']){
+            $img=$request['avatarUser'];
+            $nameImg=time().'_'.$img->getClientOriginalName();
+            Storage::disk('public')->put($nameImg,File::get($img));
+            $user->avatar=$nameImg;
+        }
+         else{
+            $user->avatar='default.jpg';
+         }
+        $user->save();   
         return redirect()->route('user.index');
     }
     public function update(Request $request, $id)
@@ -42,13 +52,25 @@ class UserController extends Controller
         $user->name=$data['nameUser'];
         $user->email=$data['emailUser'];
         $user->password=Hash::make($data['passwordUser']);
-        $user->avatar=$data['avatarUser'];
+
+        if($request['avatarUser']){
+            Storage::disk('public')->delete($user->avatar);//
+            $img=$request['avatarUser'];
+            $nameImg=time().'_'.$img->getClientOriginalName();
+            Storage::disk('public')->put($nameImg,File::get($img));
+            $user->avatar=$nameImg;
+        }
+       else{
+            $user->avatar='default.jpg';
+       }
         $user->save();
         return redirect()->route('user.index');
     }
     public function destroy($id)
     {
+
         $user =User::find($id);
+        Storage::disk('public')->delete($user->avatar);
         $user->delete();
         return redirect()->route('user.index');
     }
