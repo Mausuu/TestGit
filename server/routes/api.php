@@ -26,16 +26,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //$RECYCLE.BINRoute::get('/users', [UserController::class, 'index']);
 Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
 Route::get('/user', [UserController::class, 'index'])->name('user.index');
-Route::post('/add-user',[UserController::class,'store'])->name('user.store');
+Route::post('/register',[UserController::class,'store'])->name('user.store');
 Route::post('/update-user/{id}',[UserController::class,'update'])->name('user.update');
 Route::delete('/delete-user/{id}',[UserController::class,'destroy'])->name('user.destroy');
+Route::post('/user/login', [UserController::class, 'login']);
 
-
-
-
-Route::controller(UserController::class)->group(function(){
-    Route::post('login','login');
-});
 
 Route::get('/category',[CategoryController::class,'index'])->name('category.index');
 Route::get('/category/{id}',[CategoryController::class,'show'])->name('category.show');
@@ -56,7 +51,7 @@ Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::post('/add-admin',[AdminController::class,'store'])->name('admin.store');
 Route::delete('/delete-admin/{id}',[AdminController::class,'destroy'])->name('admin.destroy');
 Route::post('/update-admin/{id}',[AdminController::class,'update'])->name('admin.update');
-
+Route::post('/admin/login', [AdminController::class, 'login']);
 ///Anh
 
 Route::get('/image',[ImageController::class,'index'])->name('image.index');

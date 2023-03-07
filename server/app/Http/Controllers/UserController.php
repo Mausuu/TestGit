@@ -26,15 +26,15 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //$table->string('name',32);
-           // $table->string('email',32)->unique();
-           // $table->string('password',50);
-           // $table->string('avatar',255);
+        // $table->string('email',32)->unique();
+        // $table->string('password',50);
+        // $table->string('avatar',255);
         $user =new User();
         $user->name=$request->name;
         $user->email=$request->email;
         $user->password=Hash::make($request->password);
-        if($request['avatarUser']){
-            $img=$request['avatarUser'];
+        if($request['avatar']){
+            $img=$request['avatar'];
             $nameImg=time().'_'.$img->getClientOriginalName();
             Storage::disk('public')->put($nameImg,File::get($img));
             $user->avatar=$nameImg;
@@ -74,17 +74,21 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('user.index');
     }
-    public function login(Request $request){
-       if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-            $user = $request->user();
-            $success['token'] = $user->createToken('MyApp')->planTextToken;
-            $success['name'] = $user->name;
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
 
-            $reponse =[
-                'success' => true,
-                'data' => $success,
-                'message' => 'Dang nhap thanh cong'
-            ];
-       }
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            $token = $user->createToken('API Token')->accessToken;
+            $name = $user->name;
+
+            return response()->json([
+                'token' => $token,
+                'name' => $name
+            ]);
+        } else {
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
     }
 }

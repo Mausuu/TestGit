@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\Request;
 use App\Models\Admin;
-
-use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -80,5 +81,22 @@ class AdminController extends Controller
         // $image->delete();
         // return redirect()->route('image.index');
     }
-    
+   
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::guard('admin')->attempt($credentials)) {
+            $admin = Auth::admin();
+            $token = $admin->createToken('API Token')->accessToken;
+            $name = $admin->name;
+
+            return response()->json([
+                'token' => $token,
+                'name' => $name
+            ]);
+        } else {
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
+    }
 }
