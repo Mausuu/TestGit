@@ -47,7 +47,7 @@ class ImageController extends Controller
             Storage::disk('public')->put($nameImg,File::get($img));
             $image->name=$nameImg;
         }
-        $image->url='http://localhost/image/storage/app/public/uploads/';
+        $image->url='http://localhost/images/';
         $image->save();
         return redirect()->route('image.index');
 
