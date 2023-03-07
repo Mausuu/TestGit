@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Admin;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -81,4 +81,15 @@ class AdminController extends Controller
         // return redirect()->route('image.index');
     }
     
+    public function loginAdmin(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::guard('admin')->attempt($credentials)) {
+            // Authentication passed...
+            return response()->json(['message' => 'Login successful']);
+        }
+
+        return response()->json(['message' => 'Invalid email or password'], 401);
+    }
 }

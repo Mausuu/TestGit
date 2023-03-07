@@ -74,17 +74,20 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('user.index');
     }
-    public function login(Request $request){
-       if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-            $user = $request->user();
-            $success['token'] = $user->createToken('MyApp')->planTextToken;
-            $success['name'] = $user->name;
+    public function loginUser(Request $request){
+        $credentials = $request->only('email', 'password');
 
-            $reponse =[
-                'success' => true,
-                'data' => $success,
-                'message' => 'Dang nhap thanh cong'
-            ];
-       }
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            $token = $user->createToken('API Token')->accessToken;
+            $name = $user->name;
+
+            return response()->json([
+                'token' => $token,
+                'name' => $name
+            ]);
+        } else {
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
     }
 }
