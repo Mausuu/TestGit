@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ImageController;
 
 /*
@@ -59,3 +60,7 @@ Route::get('/image/{id}',[ImageController::class,'show'])->name('image.show');
 Route::post('/add-image',[ImageController::class,'store'])->name('image.store');
 Route::delete('/delete-image/{id}',[ImageController::class,'destroy'])->name('image.destroy');
 Route::post('/update-image/{id}',[ImageController::class,'update'])->name('image.update');
+
+
+Route::get('/cart/{id}',[CartController::class,'show']);
+Route::delete('/cart/{rowId}',[CartController::class,'destroy']);
