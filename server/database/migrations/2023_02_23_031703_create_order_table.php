@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('order', function (Blueprint $table) {
             $table->id();
-            $table->integer('status');
-            $table->dateTime('time_ship');
+            $table->integer('product_qty');
             $table->timestamps();
         });
     }

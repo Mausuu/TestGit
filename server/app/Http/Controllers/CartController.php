@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Models\Cart;
+
 
 class CartController extends Controller
 {
@@ -15,7 +16,13 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        $cart = Cart::content();
+        $result =[];
+        foreach ($cart as $row)
+        {
+            array_push($result, $row);
+        }
+        return response()->json($result);
     }
 
     /**
@@ -25,7 +32,7 @@ class CartController extends Controller
      */
     public function create()
     {
-        //
+    
     }
 
     /**
@@ -36,7 +43,50 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id_users=$request->id_user;
+        $id_product=$request->id_product;
+        $product_qty=$request->product_qty;
+         
+        $product_check = Product::where('id',$id_product)->first();
+        if($product_check)
+        {
+           if(Cart::where('id_product',$id_product)->where('id_user',$id_user)->exist())
+           {
+            return response()->json(
+                [
+                   'status'=>400,
+                   'message'=>'Cart ton tai san sp'
+                ]
+            );
+           }
+           else
+           {
+            $cart = new Cart;
+            $id_users=$request->id_user;
+            $id_product=$request->id_product;
+            $product_qty=$request->product_qty;
+            $cart->save();
+            return response()->json(
+                [
+                   'status'=>201,
+                   'message'=>'i am in cart'
+                ]
+            );
+           }
+        }
+        else
+        {
+            return response()->json(
+                [
+                   'status'=>404,
+                   'message'=>'not found'
+                ]
+            );
+        }
+
+
+
+
     }
 
     /**
@@ -56,9 +106,15 @@ class CartController extends Controller
             'weight' => 0,
             'options' => ['img' => $product->avatar]
         ]);
-        return Cart::content();
+        $cart = Cart::content();
+        $result =[];
+        foreach ($cart as $row)
+        {
+            array_push($result, $row->rowId);
+        }
+        return response()->json($result);
     }
-
+   
     /**
      * Show the form for editing the specified resource.
      *

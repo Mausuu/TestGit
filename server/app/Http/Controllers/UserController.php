@@ -85,7 +85,7 @@ class UserController extends Controller
 
             return response()->json([
                 'token' => $token,
-                'name' => $name
+                'name' => $name,
             ]);
         } else {
             return response()->json(['error' => 'Unauthenticated'], 401);
