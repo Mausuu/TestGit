@@ -74,8 +74,12 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('user.index');
     }
+<<<<<<< HEAD
     public function login(Request $request)
     {
+=======
+    public function loginUser(Request $request){
+>>>>>>> 7d158008bf3f6472abdf22c657b230d17711fb87
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
@@ -85,7 +89,11 @@ class UserController extends Controller
 
             return response()->json([
                 'token' => $token,
+<<<<<<< HEAD
                 'name' => $name,
+=======
+                'name' => $name
+>>>>>>> 7d158008bf3f6472abdf22c657b230d17711fb87
             ]);
         } else {
             return response()->json(['error' => 'Unauthenticated'], 401);

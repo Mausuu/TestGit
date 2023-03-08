@@ -23,6 +23,10 @@ use App\Http\Controllers\ImageController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::middleware(['auth:admin'])->group(function () {
+    // Admin routes
+});
+Route::post('admin/login',[AdminController::class,'loginAdmin']);
 //Route::get('/user/{id}', [UserController::class, 'show']);
 //$RECYCLE.BINRoute::get('/users', [UserController::class, 'index']);
 Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
@@ -30,7 +34,8 @@ Route::get('/user', [UserController::class, 'index'])->name('user.index');
 Route::post('/register',[UserController::class,'store'])->name('user.store');
 Route::post('/update-user/{id}',[UserController::class,'update'])->name('user.update');
 Route::delete('/delete-user/{id}',[UserController::class,'destroy'])->name('user.destroy');
-Route::post('/user/login', [UserController::class, 'login']);
+
+
 
 
 Route::get('/category',[CategoryController::class,'index'])->name('category.index');
