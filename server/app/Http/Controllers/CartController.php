@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Models\Cart;
+use App\Models\cart;
 
 
 class CartController extends Controller
@@ -50,18 +50,18 @@ class CartController extends Controller
         $product_check = Product::where('id',$id_product)->first();
         if($product_check)
         {
-           if(Cart::where('id_product',$id_product)->where('id_user',$id_user)->exist())
+           if(cart::where('id_product',$id_product)->where('id_user',$id_user)->exist())
            {
             return response()->json(
                 [
                    'status'=>400,
-                   'message'=>'Cart ton tai san sp'
+                   'message'=>'cart ton tai san sp'
                 ]
             );
            }
            else
            {
-            $cart = new Cart;
+            $cart = new cart;
             $id_users=$request->id_user;
             $id_product=$request->id_product;
             $product_qty=$request->product_qty;

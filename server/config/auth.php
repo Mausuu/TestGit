@@ -40,19 +40,8 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-<<<<<<< HEAD
         'admin' => [
             'driver' => 'passport',
-=======
-        'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
-            'hash' => false,
-        ],
-    
-        'admin' => [
-            'driver' => 'session',
->>>>>>> 7d158008bf3f6472abdf22c657b230d17711fb87
             'provider' => 'admins',
         ],
     ],
