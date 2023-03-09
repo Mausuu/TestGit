@@ -12,5 +12,7 @@ class Product extends Model
     protected $fillable=['id','name_product','price','avatar','detail','quantity'];
     protected $primaryKey='id';
     protected $table='product';
-
+    public function cart(){
+        return $this->hasMany(cart::class,'id','id');
+    }
 }

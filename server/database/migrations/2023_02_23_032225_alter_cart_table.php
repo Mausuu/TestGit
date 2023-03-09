@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('order', function (Blueprint $table) {
+        Schema::table('cart', function (Blueprint $table) {
             $table->unsignedBigInteger('id_users');
             $table->foreign('id_users')->references('id')->on('users');    
             $table->unsignedBigInteger('id_product');

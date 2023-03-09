@@ -9,11 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Admin;
-<<<<<<< HEAD
-=======
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
->>>>>>> 7d158008bf3f6472abdf22c657b230d17711fb87
+
 
 class AdminController extends Controller
 {
@@ -86,35 +82,16 @@ class AdminController extends Controller
         // $image->delete();
         // return redirect()->route('image.index');
     }
-<<<<<<< HEAD
-   
-    public function login(Request $request)
-=======
     
     public function loginAdmin(Request $request)
->>>>>>> 7d158008bf3f6472abdf22c657b230d17711fb87
     {
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('admin')->attempt($credentials)) {
-<<<<<<< HEAD
-            $admin = Auth::admin();
-            $token = $admin->createToken('API Token')->accessToken;
-            $name = $admin->name;
-
-            return response()->json([
-                'token' => $token,
-                'name' => $name
-            ]);
-        } else {
-            return response()->json(['error' => 'Unauthenticated'], 401);
-        }
-=======
             // Authentication passed...
             return response()->json(['message' => 'Login successful']);
         }
 
         return response()->json(['message' => 'Invalid email or password'], 401);
->>>>>>> 7d158008bf3f6472abdf22c657b230d17711fb87
     }
 }

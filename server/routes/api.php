@@ -27,7 +27,7 @@ Route::middleware(['auth:admin'])->group(function () {
     // Admin routes
 });
 Route::post('admin/login',[AdminController::class,'loginAdmin']);
-//Route::get('/user/{id}', [UserController::class, 'show']);
+Route::post('/user/login', [UserController::class, 'login']);
 //$RECYCLE.BINRoute::get('/users', [UserController::class, 'index']);
 Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
 Route::get('/user', [UserController::class, 'index'])->name('user.index');
@@ -65,9 +65,6 @@ Route::delete('/delete-image/{id}',[ImageController::class,'destroy'])->name('im
 Route::post('/update-image/{id}',[ImageController::class,'update'])->name('image.update');
 
 
-Route::get('/cart/{id}',[CartController::class,'show']);
-Route::post('/cart',[CartController::class,'store']);
-
-Route::get('/cart_show/{id}',[CartController::class,'index']);
-
-Route::delete('/cart/{rowId}',[CartController::class,'destroy']);
+Route::post('/cart-add',[CartController::class,'store']);
+Route::post('/cart-update/{id}',[CartController::class,'update']);
+Route::get('/cart/{id}', [CartController::class, 'show']);

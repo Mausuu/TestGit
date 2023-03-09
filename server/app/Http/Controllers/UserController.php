@@ -81,14 +81,19 @@ class UserController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             $token = $user->createToken('API Token')->accessToken;
-            $name = $user->name;
-
+            $user = $user; 
             return response()->json([
+                'status' => 200,
                 'token' => $token,
-                'name' => $name,
+                'user' => $user,       
             ]);
         } else {
-            return response()->json(['error' => 'Unauthenticated'], 401);
+            return response()->json(
+                [
+                    'status' => 404,
+                    'message' => 'Mật khâu hoặc email bị sai',
+                ]
+            );
         }
     }
 }
