@@ -1,18 +1,39 @@
 import admin from '../views/admin.vue';
 import client from '../views/client.vue';
-import {createRouter,createWebHistory, useRoute} from 'vue-router';
+
+
+import {createRouter,createWebHistory} from 'vue-router';
 const router = createRouter({
   history: createWebHistory(),
   routes: [ 
     {
-        path: '/',
-        components: {
-          default: client,        
-        }, 
+      path: '/',
+      name:'home',
+      components: {
+        default: client, 
+      }, children:[
+        {
+          path:'cart',
+          name:'cart' ,
+          component:()=>import('../layout/client/cart.vue')
+        }
+      ],       
+        
       },
+      {
+        path:'/login',
+        component:()=>import('../layout/client/login.vue'),
+        name:'login_client'
+   },
+       {
+        path:'/register',
+        component:()=>import('../layout/client/register.vue'),
+        name:'register_client'
+       },
       //admin
       {
-        path: '/admin',
+        path: '/home_login',
+        name:'home_login',
         components: {
           default: admin,      
         },
@@ -37,10 +58,16 @@ const router = createRouter({
           path:'category',
           component:()=>import('../layout/admin/category.vue'),
           name:'category'
-         },
+         },       
         ],
      
       },
+
+      {
+        path:'/admin',
+        component:()=>import('../layout/admin/login.vue'),
+        name:'admin'
+       },
   ],
 })
 export default router;
