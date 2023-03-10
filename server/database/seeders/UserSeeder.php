@@ -20,12 +20,14 @@ class UserSeeder extends Seeder
            ["name" => "demo2",
             "email" => "demo122@gmail.com",
             "password" => Hash::make("1tttt"),
-            "avatar"=>"demo21.jpg"],
+            "avatar"=>"demo21.jpg",
+            "url"   =>"http://localhost/images/"],
 
             ["name" => "demo1",
             "email" => "demo222@gmail.com",
             "password" =>Hash::make("1233"),
-            "avatar"=>"demo212.jpg"]
+            "avatar"=>"demo212.jpg",
+            "url"   =>"http://localhost/images/"]
         ]  );   
     }
 }

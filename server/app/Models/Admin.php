@@ -18,6 +18,7 @@ class Admin extends Model implements AuthenticatableContract, CanResetPasswordCo
         'email',
         'password',
         'avatar',
+        'url',
     ];
     /**
      * The attributes that should be hidden for serialization.

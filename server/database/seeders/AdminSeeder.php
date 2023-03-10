@@ -20,7 +20,9 @@ class AdminSeeder extends Seeder
             ["name" => "NguyenPhuc",
              "email" => "adminphuc@gmail.com",
              "password" => Hash::make("12345"),
-             "avatar"=>"admina1a.jpg",]
+             "avatar"=>"admina1a.jpg",
+             "url"   =>"http://localhost/images/",]
+             
          ]
      );
     }
