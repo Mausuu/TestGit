@@ -11,14 +11,7 @@ const router = createRouter({
       name:'home',
       components: {
         default: client, 
-      }, children:[
-        {
-          path:'cart',
-          name:'cart' ,
-          component:()=>import('../layout/client/cart.vue')
-        }
-      ],       
-        
+      },  
       },
       {
         path:'/login',
@@ -32,7 +25,7 @@ const router = createRouter({
        },
       //admin
       {
-        path: '/home_login',
+        path: '/admin',
         name:'home_login',
         components: {
           default: admin,      
@@ -63,11 +56,18 @@ const router = createRouter({
      
       },
 
-      {
-        path:'/admin',
-        component:()=>import('../layout/admin/login.vue'),
-        name:'admin'
-       },
+      // {
+      //   path:'/admin',
+      //   component:()=>import('../layout/admin/login.vue'),
+      //   name:'admin'
+      //  },
+
+       {
+        path:'/cart',
+        name:'cart' ,
+        component:()=>import('../views/cart.vue')
+      }
+      
   ],
 })
 export default router;

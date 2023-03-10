@@ -109,7 +109,9 @@
   </template>
   
   <script>
+
   export default {
+    name:"category_admin",
     data() {
       return {
        categorys: [],  

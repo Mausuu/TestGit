@@ -73,7 +73,7 @@ export default {
     },
     //ham lay tong tien  
     async addCart(id) {
-      this.isShowModel=!this.isShowModel;
+     
       let user = localStorage.getItem("user-info");
       const result = JSON.parse(user);
       try {
@@ -90,7 +90,8 @@ export default {
       } catch (e) {
         console.log(e);
       }
-
+      this.isShowModel=!this.isShowModel;
+      this.$forceUpdate
     },
 
     async getcart() {

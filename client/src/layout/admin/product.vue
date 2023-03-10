@@ -157,7 +157,7 @@ export default {
   },
   mounted() {
     this.getproducts();
-    this.getcategorys();
+    
   },
   methods: {
 

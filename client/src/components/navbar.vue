@@ -7,9 +7,10 @@
       </router-link>
 
       <div class="order-lg-2 nav-btns">
-        <button type="button" class="btn position-relative">
+        <router-link to="/cart"> <button type="button" class="btn position-relative">
           <i class="fa fa-shopping-cart"></i>
-        </button>
+        </button></router-link>
+       
       </div>
 
       <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">

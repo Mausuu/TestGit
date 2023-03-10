@@ -54,19 +54,22 @@ export default {
     },
     methods:
     {
-        async login() {      
-            axios.post(`${import.meta.env.VITE_API_BASE_URL}user/login?email=${this.email}&password=${this.password}`)
-                .then( (response) =>{
-                    alert(response.status)
-                    // if (response.status == 201) {
-                    //      localStorage.setItem("user-info", JSON.stringify(response.data.user));  
-                    //      this.$router.push({ name:'home'})  
-                    // }
-                    
-                });
-
+        
+        async login()
+        {
+            const login = await axios.post(
+                `${import.meta.env.VITE_API_BASE_URL}user/login?email=${this.email}&password=${this.password}`
+            );
+            if(login.data.status==202)
+            {
+                localStorage.setItem("user-info", JSON.stringify(login.data.user));  
+                this.$router.push({ name:'home'})
+            }
+            else
+            {
+                alert('login that bai');
+            }
         }
-
     }
 }
 </script>

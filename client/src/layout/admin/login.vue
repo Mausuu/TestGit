@@ -37,19 +37,15 @@ export default {
             password: ""
         }
     },
-   
+  
     methods:
     {
         async login() {
           
             axios.post(`${import.meta.env.VITE_API_BASE_URL}admin/login?email=${this.email}&password=${this.password}`)
                 .then( (response) =>{
-                    if (response.status == 200) {
-                        localStorage.setItem("user-info", JSON.stringify(response.data.name));
-                       
-                        this.$router.push({ name:'home'})
-        
-                         console.log('a')
+                    if (response.data.status == 202) {
+                        this.$router.push({ name:'home_login'})
                     }
                 });
 
