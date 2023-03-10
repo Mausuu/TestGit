@@ -87,7 +87,7 @@ class CartController extends Controller
     {       
         $cart = Cart::
         join('product', 'product.id', '=', 'cart.id_product')
-        ->select('cart.*','product.avatar','product.price','product.name_product',)
+        ->select('cart.*','product.url','product.price','product.name_product',)
         ->where('id_users', $id)     
         ->get();        
         return response()->json($cart);      

@@ -8,6 +8,7 @@
 
     <router-view />
 </template> 
+
 <script>
 import "../assets/client.css";
 import navbar from "../components/navbar.vue";

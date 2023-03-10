@@ -45,7 +45,7 @@ export default {
             axios.post(`${import.meta.env.VITE_API_BASE_URL}admin/login?email=${this.email}&password=${this.password}`)
                 .then( (response) =>{
                     if (response.data.status == 202) {
-                        this.$router.push({ name:'home_login'})
+                        this.$router.push({ name:'user'})
                     }
                 });
 

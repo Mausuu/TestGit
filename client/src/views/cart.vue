@@ -12,7 +12,7 @@
                 </div>    
                 <div class="row border-top border-bottom" >
                     <div class="row main align-items-center"  v-for="cart in carts">
-                        <div class="col-2"><img class="img-fluid" :src=cart.avatar ></div>
+                        <div class="col-2"><img class="img-fluid" :src=cart.url ></div>
                         <div class="col">
                             <div class="row text-muted">{{ cart.name_product }}</div>
                             <!-- <div class="row">Cotton T-shirt</div> -->
