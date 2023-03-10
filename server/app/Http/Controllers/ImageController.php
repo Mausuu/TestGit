@@ -94,6 +94,7 @@ class ImageController extends Controller
             Storage::disk('public')->put($nameImg,File::get($img));
             $image->name=$nameImg;
         }       
+   
         $image->save();
         return redirect()->route('image.index');
     }

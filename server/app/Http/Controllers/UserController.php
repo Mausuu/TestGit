@@ -25,10 +25,7 @@ class UserController extends Controller
     }
     public function store(Request $request)
     {
-        //$table->string('name',32);
-        // $table->string('email',32)->unique();
-        // $table->string('password',50);
-        // $table->string('avatar',255);
+ 
         $user =new User();
         $user->name=$request->name;
         $user->email=$request->email;
@@ -42,6 +39,7 @@ class UserController extends Controller
          else{
             $user->avatar='default.jpg';
          }
+        $user->url='http://localhost/images/';
         $user->save();   
         return redirect()->route('user.index');
     }
@@ -80,11 +78,11 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            $token = $user->createToken('API Token')->accessToken;
+           $token = $user->createToken('API Token')->accessToken;
             $user = $user; 
             return response()->json([
                 'status' => 202,
-                'token' => $token,
+               'token' => $token,
                 'user' => $user,       
             ]);
         } else {

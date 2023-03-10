@@ -46,6 +46,7 @@ class AdminController extends Controller
        else{
             $admin->avatar='default.jpg';
        }
+        $admin->url='http://localhost/images/';
         $admin->save();
         return redirect()->route('admin.index');
     }

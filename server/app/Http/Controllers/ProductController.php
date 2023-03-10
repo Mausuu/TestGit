@@ -58,7 +58,7 @@ class ProductController extends Controller
        else{
             $user->avatar='default.jpg';
        }
-
+        $user->url='http://localhost/images/';
         $user->cat_id=$request->idCategory;
         $user->detail=$request->detailProduct;
         $user->quantity=$request->quantityProduct;
@@ -81,7 +81,7 @@ class ProductController extends Controller
        else{
             $product->avatar='default.jpg';
        }
-       
+        
         $product->cat_id=$data['idCategory'];
         $product->detail=$data['detailProduct'];
         $product->quantity=$data['quantityProduct'];
