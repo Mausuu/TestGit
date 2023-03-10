@@ -84,9 +84,14 @@ class CartController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        $cart = Cart::where('id_users', $id)->get();       
-        return response()->json($cart);
+    {       
+        $cart = Cart::
+        join('product', 'product.id', '=', 'cart.id_product')
+        ->select('cart.*','product.avatar','product.price','product.name_product',)
+        ->where('id_users', $id)     
+        ->get();        
+        return response()->json($cart);      
+
     }
 
     /**

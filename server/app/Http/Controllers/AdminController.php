@@ -88,10 +88,20 @@ class AdminController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('admin')->attempt($credentials)) {
-            // Authentication passed...
-            return response()->json(['message' => 'Login successful']);
-        }
 
-        return response()->json(['message' => 'Invalid email or password'], 401);
+            return response()->json([
+                'status'=> 202,
+                'message' => 'Đăng nhập thành công'
+            ]);
+        }
+        else
+        {
+             return response()->json([
+            'status'=> 401,
+            'message' => 'Đăng nhập thất bại'
+        ]);
+        }
+       
+        
     }
 }

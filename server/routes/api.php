@@ -55,7 +55,7 @@ Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::post('/add-admin',[AdminController::class,'store'])->name('admin.store');
 Route::delete('/delete-admin/{id}',[AdminController::class,'destroy'])->name('admin.destroy');
 Route::post('/update-admin/{id}',[AdminController::class,'update'])->name('admin.update');
-Route::post('/admin/login', [AdminController::class, 'login']);
+Route::post('/admin/login', [AdminController::class, 'loginAdmin']);
 ///Anh
 
 Route::get('/image',[ImageController::class,'index'])->name('image.index');

@@ -83,7 +83,7 @@ class UserController extends Controller
             $token = $user->createToken('API Token')->accessToken;
             $user = $user; 
             return response()->json([
-                'status' => 200,
+                'status' => 202,
                 'token' => $token,
                 'user' => $user,       
             ]);
