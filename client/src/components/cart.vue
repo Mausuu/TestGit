@@ -48,7 +48,6 @@
 export default {
   data() {
     return {
-      products: [],
       carts: [],
     };
   },
@@ -67,9 +66,7 @@ export default {
         });
         return formatter.format(value);
     },
-    onCloseModal() {
-      this.$emit("cancel");
-    },
+  
 
     async getcart() {
       try {

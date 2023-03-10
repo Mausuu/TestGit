@@ -26,7 +26,7 @@
                 </small>
               </p>
               <!--@click="addCart(product.id)"-->
-              <button  @click="addCart(product.id)" class="btn btn-primary mt-3 position-relative" >Mua hàng</button>
+              <button @onclick="request()" @click="addCart(product.id)" class="btn btn-primary mt-3 position-relative " data-bs-toggle="modal" data-bs-target="#exampleModal"  >Mua hàng</button>
             </div>
 
           </div>
@@ -36,26 +36,58 @@
     </div>
   </section>
 
-<cart v-if="isShowModel" @cancel="addCart"/>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal"  aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Giỏ hàng</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Tên sản phẩm</th>
+              <th>Giá</th>
+              <th>Số lượng mua</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="cart in carts">
+
+              <td>{{ cart.name_product }}</td>
+              <td>{{
+                 formatPrice(cart.price * cart.product_qty) }}</td>
+              <td>{{ cart.product_qty }}</td>
+
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
 </template>
 
 <script>
-import cart from './cart.vue';
 export default {
-  components:
-  {
-    cart,
-  },
+ 
   data() {
     return {
-      products: [],
+      products: [],  
       carts: [],
-      isShowModel:false,
     };
   },
   mounted() {
-    this.getproducts();
-    this.getcart();
+    this.getproducts(); 
+
   },
   methods:
   {
@@ -66,14 +98,15 @@ export default {
         );
         this.products = result.data;
         console.log(result.data);
+        
       } catch (e) {
         console.log(e);
       }
+    
 
     },
     //ham lay tong tien  
-    async addCart(id) {
-     
+    async addCart(id) { 
       let user = localStorage.getItem("user-info");
       const result = JSON.parse(user);
       try {
@@ -84,15 +117,25 @@ export default {
             id_users: result.id,
             id_product: id,
             product_qty: 1,
-          }
+          }        
         );
+      
       
       } catch (e) {
         console.log(e);
       }
-      this.isShowModel=!this.isShowModel;
-      this.$forceUpdate
+      this.getcart();
+      this.$forceUpdate();
     },
+    formatPrice(value) {
+        var formatter = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+            minimumFractionDigits: 0
+        });
+        return formatter.format(value);
+    },
+  
 
     async getcart() {
       try {
@@ -102,12 +145,14 @@ export default {
           `${import.meta.env.VITE_API_BASE_URL}cart/` + a.id
         );
         this.carts = result.data;
+      
         console.log(result);
+
       } catch (e) {
         console.log(e);
       }
+   
     },
-
   }
 }
 </script>

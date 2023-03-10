@@ -25,7 +25,7 @@ const router = createRouter({
        },
       //admin
       {
-        path: '/admin',
+        path: '/home_login',
         name:'home_login',
         components: {
           default: admin,      
@@ -56,11 +56,11 @@ const router = createRouter({
      
       },
 
-      // {
-      //   path:'/admin',
-      //   component:()=>import('../layout/admin/login.vue'),
-      //   name:'admin'
-      //  },
+      {
+        path:'/admin',
+        component:()=>import('../layout/admin/login.vue'),
+        name:'admin'
+       },
 
        {
         path:'/cart',
