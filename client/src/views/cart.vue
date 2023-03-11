@@ -18,11 +18,15 @@
                             <!-- <div class="row">Cotton T-shirt</div> -->
                         </div>
                         <div class="col">
-                            <input @change="updateCart()" aria-label="quantity" class="input-qty" name="product_qty" type="number"  v-model="cart.product_qty"> 
                             
+                            <input  aria-label="quantity" class="input-qty" name="product_qty" type="number" @input="updateCart($event,cart.id) "
+                            :value="cart.product_qty" > 
                         </div>
                         <div class="col">{{
                             formatPrice(cart.price * cart.product_qty) }} <span class="close"></span></div>
+                            <div class="col">
+                                <button @click="deletecart(cart.id)" style="border:none;padding:10px;color:red" >X</button>
+                            </div>
                     </div>
                 </div>
                 
@@ -35,7 +39,10 @@
                     <div class="col">Tổng tiền</div>
                     <div class="col text-right">{{sumprice()}}</div>
                 </div>
+            
                 <button class="btn">Thanh toán</button>
+                <button class="btn" @click="update()">Cập nhập giỏ hàng</button>
+
                 <button class="btn">Quay lại mua hàng</button>
             </div>
         </div>
@@ -58,8 +65,9 @@ export default
     {
         return{
             carts:[],
-            qty:"",
-            
+            qty:""  ,
+          
+                
         }
     },
     mounted()
@@ -69,7 +77,7 @@ export default
     },
     methods:
     {
-
+    
     formatPrice(value) {
         var formatter = new Intl.NumberFormat('vi-VN', {
             style: 'currency',
@@ -115,19 +123,36 @@ export default
       }
     },
      
-    async updateCart() {
+    async updateCart(e,id) {
         try {
+          
           const cart = await axios.post(
-            `${import.meta.env.VITE_API_BASE_URL}cart-update`,
+            `${import.meta.env.VITE_API_BASE_URL}cart-update/` +id,
             {
-              cat_name: this.cat_name,
-            }
-          );       
+               
+             product_qty: e.target.value,            
+            }            
+          );        
         } catch (e) {
           console.log(e);
-        }
+        } 
       },
-    }
+      
+     async deletecart(id) {
+      try {
+        await axios.get(`${import.meta.env.VITE_API_BASE_URL}cart-delete/` + id)
+        window.location.reload()
+      } catch (error) {
+        this.error = error.response.data
+      }
+     
+    },
+      update()
+      {
+        window.location.reload()
+      }
+    },
+
 }
 </script>
 
@@ -141,6 +166,7 @@ export default
     font-family: sans-serif;
     font-size: 0.8rem;
     font-weight: bold;
+    padding-top: 100px;
 }
 .title{
     margin-bottom: 5vh;
