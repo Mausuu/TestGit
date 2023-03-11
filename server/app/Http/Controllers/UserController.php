@@ -39,21 +39,26 @@ class UserController extends Controller
          else{
             $user->avatar='default.jpg';
          }
-        $user->url='http://localhost/images/';
+        $user->url='http://127.0.0.1:8000/images';
         $user->save();   
-        return redirect()->route('user.index');
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'Thêm xong !!!'
+            ]
+        );
     }
     public function update(Request $request, $id)
     {
         $data=$request->all();
         $user =User::find($id);
-        $user->name=$data['nameUser'];
-        $user->email=$data['emailUser'];
-        $user->password=Hash::make($data['passwordUser']);
+        $user->name=$data['name'];
+        $user->email=$data['email'];
+        $user->password=Hash::make($data['password']);
 
-        if($request['avatarUser']){
+        if($request['avatar']){
             Storage::disk('public')->delete($user->avatar);//
-            $img=$request['avatarUser'];
+            $img=$request['avatar'];
             $nameImg=time().'_'.$img->getClientOriginalName();
             Storage::disk('public')->put($nameImg,File::get($img));
             $user->avatar=$nameImg;
@@ -62,7 +67,12 @@ class UserController extends Controller
             $user->avatar='default.jpg';
        }
         $user->save();
-        return redirect()->route('user.index');
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'Sửa Thành Công !!!'
+            ]
+        );
     }
     public function destroy($id)
     {
@@ -70,7 +80,12 @@ class UserController extends Controller
         $user =User::find($id);
         Storage::disk('public')->delete($user->avatar);
         $user->delete();
-        return redirect()->route('user.index');
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'Delete xong !!!'
+            ]
+        );
     }
     public function login(Request $request)
     {
@@ -78,7 +93,7 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-           $token = $user->createToken('API Token')->accessToken;
+           $token = $user->//createToken('API Token')->accessToken;
             $user = $user; 
             return response()->json([
                 'status' => 202,

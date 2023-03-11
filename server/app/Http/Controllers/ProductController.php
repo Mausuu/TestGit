@@ -74,11 +74,11 @@ class ProductController extends Controller
     {
         $data=$request->all();
         $product =Product::find($id);
-        $product->name_product=$data['nameProduct'];
-        $product->price=$data['priceProduct'];
-        if($request['avatarProduct']){
+        $product->name_product=$data['nameproduct'];
+        $product->price=$data['price'];
+        if($request['avatar']){
             Storage::disk('public')->delete($product->avatar);//
-            $img=$request['avatarProduct'];
+            $img=$request['avatar'];
             $nameImg=time().'_'.$img->getClientOriginalName();
             Storage::disk('public')->put($nameImg,File::get($img));
             $product->avatar=$nameImg;
@@ -87,12 +87,17 @@ class ProductController extends Controller
             $product->avatar='default.jpg';
        }
         
-        $product->cat_id=$data['idCategory'];
-        $product->detail=$data['detailProduct'];
-        $product->quantity=$data['quantityProduct'];
+        $product->cat_id=$data['cat_id'];
+        $product->detail=$data['detail'];
+        $product->quantity=$data['quantity'];
       
         $product->save();
-        return redirect()->route('product.index');
+        return response()->json(
+            [
+                'status' =>200,
+                'message' => 'Sửa thành công'
+            ]
+        );
     }
 
     /**
@@ -144,6 +149,12 @@ class ProductController extends Controller
         $product =Product::find($id);
         Storage::disk('public')->delete($product->avatar);//
         return $product->delete();
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'Delete xong !!!'
+            ]
+        );
         
     }
 }

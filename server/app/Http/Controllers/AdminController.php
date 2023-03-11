@@ -34,32 +34,38 @@ class AdminController extends Controller
 
         //
         $admin =new Admin();
-        $admin->name=$request->nameAdmin;
-        $admin->email=$request->emailAdmin;
-        $admin->password=Hash::make($request->passwordAdmin);
-        if($request['avatarAdmin']){
-            $img=$request['avatarAdmin'];
+        $admin->name=$request->name;
+        $admin->email=$request->email;
+        $admin->password=Hash::make($request->password);
+        if($request['avatar']){
+            $img=$request['avatar'];
             $nameImg=time().'_'.$img->getClientOriginalName();
-            Storage::disk('public')->put($nameImg,File::get($img));
+            Storage::disk('public/')->put($nameImg,File::get($img));
             $admin->avatar=$nameImg;
         }
        else{
             $admin->avatar='default.jpg';
        }
-        $admin->url='http://localhost/images/';
+        $admin->url='http://127.0.0.1:8000/images';
         $admin->save();
-        return redirect()->route('admin.index');
+        return response()->json(
+            [
+                'status' =>200,
+                'message' => 'Thêm thành công'
+            ]
+        );
+    
     }
     public function update(Request $request, $id)
     {
         $data=$request->all();
         $admin =Admin::find($id);
-        $admin->name=$data['nameAdmin'];
-        $admin->email=$data['emailAdmin'];
-        $admin->password=Hash::make($data['passwordAdmin']);
-        if($request['avatarAdmin']){
+        $admin->name=$data['name'];
+        $admin->email=$data['email'];
+        $admin->password=Hash::make($data['password']);
+        if($request['avatar']){
             Storage::disk('public')->delete($admin->avatar);//
-            $img=$request['avatarAdmin'];
+            $img=$request['avatar'];
             $nameImg=time().'_'.$img->getClientOriginalName();
             Storage::disk('public')->put($nameImg,File::get($img));
             $admin->avatar=$nameImg;
@@ -68,7 +74,12 @@ class AdminController extends Controller
             $admin->avatar='default.jpg';
        }
         $admin->save();
-        return redirect()->route('admin.index');
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'Sửa xong !!!'
+            ]
+        );
     }
     public function destroy($id)
     {
@@ -76,7 +87,12 @@ class AdminController extends Controller
         $admin =Admin::find($id);
         Storage::disk('public')->delete($admin->avatar);
         $admin->delete();
-        return redirect()->route('admin.index');
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'Delete xong !!!'
+            ]
+        );
 
         // $image=Image::find($id);
         // Storage::disk('public')->delete($image->name);

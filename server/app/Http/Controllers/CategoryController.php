@@ -40,7 +40,13 @@ class CategoryController extends Controller
         $category=new Category();
         $category->cat_name=$request->cat_name;
         $category->save();
-        return redirect()->route('category.index');
+        return response()->json(
+            [
+                'status' =>200,
+                'message' => 'Thêm thành công'
+            ]
+        );
+       
     }
 
     /**
@@ -77,9 +83,14 @@ class CategoryController extends Controller
     {
         $data=$request->all();
         $category =Category::find($id);
-        $category->cat_name=$data['nameCategory'];
+        $category->cat_name=$data['cat_name'];
         $category->save();
-        return redirect()->route('category.index');
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'Sửa thành công!!!'
+            ]
+        );
     }
     /**
      * Remove the specified resource from storage.
@@ -91,5 +102,11 @@ class CategoryController extends Controller
     {
         $category =Category::find($id);
         return $category->delete();
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'Delete xong !!!'
+            ]
+        );
     }
 }
