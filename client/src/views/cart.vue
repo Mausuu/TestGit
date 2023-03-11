@@ -18,7 +18,8 @@
                             <!-- <div class="row">Cotton T-shirt</div> -->
                         </div>
                         <div class="col">
-                            <input @click="updateCart()" aria-label="quantity" class="input-qty" name="product_qty" type="number"  v-model="cart.product_qty"> 
+                            <input @change="updateCart()" aria-label="quantity" class="input-qty" name="product_qty" type="number"  v-model="cart.product_qty"> 
+                            
                         </div>
                         <div class="col">{{
                             formatPrice(cart.price * cart.product_qty) }} <span class="close"></span></div>
@@ -115,18 +116,16 @@ export default
     },
      
     async updateCart() {
-        // try {
-        //   const category = await axios.post(
-        //     `${import.meta.env.VITE_API_BASE_URL}add-category`,
-        //     {
-        //       cat_name: this.cat_name,
-        //     }
-        //   ); 
-        //  this.reloadPage()      
-        // } catch (e) {
-        //   console.log(e);
-        // }
-        alert(this.qty)
+        try {
+          const cart = await axios.post(
+            `${import.meta.env.VITE_API_BASE_URL}cart-update`,
+            {
+              cat_name: this.cat_name,
+            }
+          );       
+        } catch (e) {
+          console.log(e);
+        }
       },
     }
 }
