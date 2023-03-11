@@ -68,3 +68,4 @@ Route::post('/update-image/{id}',[ImageController::class,'update'])->name('image
 Route::post('/cart-add',[CartController::class,'store']);
 Route::post('/cart-update/{id}',[CartController::class,'update']);
 Route::get('/cart/{id}', [CartController::class, 'show']);
+Route::get('/cart-delete/{id}', [CartController::class, 'destroy']);

@@ -19,7 +19,6 @@
             </thead>
             <tbody>
               <tr v-for="cart in carts">
-
                 <td>{{ cart.name_product }}</td>
                 <td>{{
                    formatPrice(cart.price * cart.product_qty) }}</td>
