@@ -47,7 +47,7 @@ class ImageController extends Controller
             Storage::disk('public')->put($nameImg,File::get($img));
             $image->name=$nameImg;
         }
-        $image->url='http://localhost/images/';
+        $image->url='http://127.0.0.1:8000/images';
         $image->save();
         return redirect()->route('image.index');
 
@@ -111,5 +111,11 @@ class ImageController extends Controller
         Storage::disk('public')->delete($image->name);
         $image->delete();
         return redirect()->route('image.index');
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'Delete xong !!!'
+            ]
+        );
     }
 }
