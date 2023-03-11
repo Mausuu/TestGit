@@ -18,6 +18,7 @@
                             <!-- <div class="row">Cotton T-shirt</div> -->
                         </div>
                         <div class="col">
+                            
                             <input  aria-label="quantity" class="input-qty" name="product_qty" type="number" @input="updateCart($event,cart.id) "
                             :value="cart.product_qty" > 
                         </div>
@@ -135,8 +136,6 @@ export default
         } catch (e) {
           console.log(e);
         } 
-        
-        
       },
       
      async deletecart(id) {
