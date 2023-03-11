@@ -84,7 +84,7 @@
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
       <div class="modal-content">
-          <form>
+         
               <div class="modal-header">
                   <h4 class="modal-title">Sửa danh mục sản phẩm</h4>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -92,17 +92,17 @@
               <div class="modal-body">
                 <div class="form-group">
                       <label>Tên danh mục sản phẩm:</label>
-                      <input type="text" class="form-control"  required  :placeholder= selectcategory.cat_name v-model="cat_name">
+                      <input type="text" class="form-control"  required v-model="cat_name">
                   </div>
 
               </div>
               <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                   <div class="control">
-                      <button class="btn btn-primary" @click="updatecategory">Sửa</button>
+                      <button class="btn btn-primary" @click="updatecategory()">Sửa</button>
                   </div>
               </div>
-          </form>
+          
       </div>
   </div>
   </div>
@@ -116,6 +116,8 @@
       return {
        categorys: [],  
         selectcategory:'',
+        cat_name:'',
+        id:'',
        
       };
     },
@@ -124,13 +126,13 @@
       this.getcategory();
     },
     methods: {
-      sendcategory(category){
-        this.selectcategory = category;
+
+      sendcategory(a){
+        this.cat_name = a.cat_name;
+        this.id=a.id
       },
       
-      reloadPage() {
-        window.location.reload();
-      },
+     
 
       async getcategory() {
         try {
@@ -152,16 +154,30 @@
               cat_name: this.cat_name,
             }
           ); 
-         this.reloadPage()      
+         location.reload();     
         } catch (e) {
           console.log(e);
         }
       },
 
+      async updatecategory() {
+        try {
+          const category = await axios.post(
+            `${import.meta.env.VITE_API_BASE_URL}update-category/`+ this.id, 
+            {
+              cat_name: this.cat_name, 
+            }
+          ) ; 
+        
+        } catch (e) {
+          console.log(e);
+        }
+location.reload();
+      },
      async deletecategory(id) {
       try {
-        await axios.delete(`${import.meta.env.API_BASE_URL}delete-category/` + id)
-        this.reloadPage()
+        await axios.post(`${import.meta.env.VITE_API_BASE_URL}delete-category/` + id)
+       location.reload()
       } catch (error) {
         this.error = error.response.data
       }

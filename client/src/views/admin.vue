@@ -23,10 +23,13 @@
             <router-link :to="{ name: 'user'}" class="nav-link text-uppercase text-dark">QUẢN LÝ NGƯỜI DÙNG</router-link>
           </li>
 
-          
 
           <li class="nav-item px-2 py-2 border-0">
             <router-link :to="{ name: 'product'}" class="nav-link text-uppercase text-dark">QUẢN LÝ SẢN PHẨM</router-link>
+          </li>
+
+          <li class="nav-item px-2 py-2 border-0">
+            <router-link :to="{ name: 'category'}" class="nav-link text-uppercase text-dark">QUẢN LÝ DANH MỤC</router-link>
           </li>
 
           <li class="nav-item px-2 py-2 border-0">

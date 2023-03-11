@@ -39,7 +39,7 @@ Route::delete('/delete-user/{id}',[UserController::class,'destroy'])->name('user
 Route::get('/category',[CategoryController::class,'index'])->name('category.index');
 Route::get('/category/{id}',[CategoryController::class,'show'])->name('category.show');
 Route::post('/add-category',[CategoryController::class,'store']);
-Route::delete('/delete-category/{id}',[CategoryController::class,'destroy'])->name('category.destroy');
+Route::post('/delete-category/{id}',[CategoryController::class,'destroy'])->name('category.destroy');
 Route::post('/update-category/{id}',[CategoryController::class,'update']);
 
 Route::get('/product',[ProductController::class,'index'])->name('product.index');

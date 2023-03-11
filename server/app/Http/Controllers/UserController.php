@@ -54,18 +54,6 @@ class UserController extends Controller
         $user =User::find($id);
         $user->name=$data['name'];
         $user->email=$data['email'];
-        $user->password=Hash::make($data['password']);
-
-        if($request['avatar']){
-            Storage::disk('public')->delete($user->avatar);//
-            $img=$request['avatar'];
-            $nameImg=time().'_'.$img->getClientOriginalName();
-            Storage::disk('public')->put($nameImg,File::get($img));
-            $user->avatar=$nameImg;
-        }
-       else{
-            $user->avatar='default.jpg';
-       }
         $user->save();
         return response()->json(
             [
