@@ -45,25 +45,30 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
-        $user =new Product();
-        $user->name_product=$request->nameProduct;
-        $user->price=$request->priceProduct;
+        $product =new Product();
+        $product->name_product=$request->name_product;
+        $product->price=$request->price;
 
-        if($request['avatarProduct']){
-            $img=$request['avatarProduct'];
-            $nameImg=time().'_'.$img->getClientOriginalName();
-            Storage::disk('public')->put($nameImg,File::get($img));
-            $user->avatar=$nameImg;
+        if($request['avatar']){
+            $img=$request['avatar'];
+            $avatar=time().'_'.$img->getClientOriginalName();
+            Storage::disk('public')->put($avatar,File::get($img));
+            $product->avatar=$avatar;
         }
        else{
-            $user->avatar='default.jpg';
+            $product->avatar='default.jpg';
        }
-        $user->url='http://localhost/images/';
-        $user->cat_id=$request->idCategory;
-        $user->detail=$request->detailProduct;
-        $user->quantity=$request->quantityProduct;
-        $user->save();
-        return redirect()->route('product.index');
+        $product->url='http://127.0.0.1:8000/images';
+        $product->cat_id=$request->cat_id;
+        $product->detail=$request->detail;
+        $product->quantity=$request->quantity;
+        $product->save();
+        return response()->json(
+            [
+                'status' =>200,
+                'message' => 'Thêm thành công'
+            ]
+        );
     }
     public function update(Request $request, $id)
     {

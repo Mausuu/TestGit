@@ -26,7 +26,7 @@
                 </small>
               </p>
               <!--@click="addCart(product.id)"-->
-              <button @onclick="request()" @click="addCart(product.id)" class="btn btn-primary mt-3 position-relative " data-bs-toggle="modal" data-bs-target="#exampleModal"  >Mua hàng</button>
+              <button  @click="addCart(product.id)" class="btn btn-primary mt-3 position-relative " data-bs-toggle="modal" data-bs-target="#exampleModal"  >Mua hàng</button>
             </div>
 
           </div>
@@ -83,11 +83,11 @@ export default {
     return {
       products: [],  
       carts: [],
+     
     };
   },
   mounted() {
     this.getproducts(); 
-
   },
   methods:
   {
@@ -108,7 +108,9 @@ export default {
     //ham lay tong tien  
     async addCart(id) { 
       let user = localStorage.getItem("user-info");
-      const result = JSON.parse(user);
+      if(user)
+      {
+        const result = JSON.parse(user);
       try {
         const cart = await axios.post(
           `${import.meta.env.VITE_API_BASE_URL}cart-add`,
@@ -126,6 +128,13 @@ export default {
       }
       this.getcart();
       this.$forceUpdate();
+      }
+      else
+      {
+        alert('Bạn chưa đăng nhập vào website')
+        location.reload()
+      }
+      
     },
     formatPrice(value) {
         var formatter = new Intl.NumberFormat('vi-VN', {

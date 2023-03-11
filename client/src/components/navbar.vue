@@ -27,7 +27,9 @@
           <li class="nav-item px-2 py-2 border-0">
             <a class="nav-link text-uppercase text-dark">VỀ CHÚNG TÔI</a>
           </li>
-
+          <li class="nav-item px-2 py-2 border-0">
+            <a class="nav-link text-uppercase text-dark">ĐĂNG XUẤT</a>
+          </li>
 
 
           <li class="nav-item dropdown px-2 py-2">
@@ -40,7 +42,7 @@
                   NHẬP</router-link></li>
               <li> <router-link :to="{ name: 'register_client' }" class="dropdown-item text-uppercase text-dark">ĐĂNG
                   KÝ</router-link></li>
-
+             
             </ul>
           </li>
         </ul>

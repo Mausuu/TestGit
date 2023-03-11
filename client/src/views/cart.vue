@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 
-                <div class="back-to-shop"><a >&leftarrow;</a><span class="text-muted">Tiếp tục mua sắm</span></div>
+                <div class="back-to-shop">  <router-link to="/">&leftarrow;<span class="text-muted">Tiếp tục mua sắm</span></router-link></div>
             </div>
             <div class="col-md-4 summary">
                 <div><h5><b>Hóa đơn tạm tính:</b></h5></div>
@@ -43,7 +43,7 @@
                 <button class="btn">Thanh toán</button>
                 <button class="btn" @click="update()">Cập nhập giỏ hàng</button>
 
-                <button class="btn">Quay lại mua hàng</button>
+              
             </div>
         </div>
         
