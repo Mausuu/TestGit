@@ -10,7 +10,7 @@ class Order extends Model
     use HasFactory;
   
     public $timestamps=false;//set time to false
-    protected $fillable=['id','cart_id','tennguoinhan','diachinguoinhan','trangthai','thanhtoan','sdt','ngaydat','quantity'];
+    protected $fillable=['id','id_user','diachinguoinhan','trangthai','thanhtoan','sdt','ngaydat'];
     protected $primaryKey='id';
     protected $table='order';
 

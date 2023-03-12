@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('order', function (Blueprint $table) {
             $table->id();
-            $table->string('tennguoinhan',255);
             $table->string('diachinguoinhan',255);
             $table->string('trangthai',255);
             $table->string('thanhtoan',255);

@@ -74,7 +74,7 @@ Route::get('/cart-delete/{id}', [CartController::class, 'destroy']);
 //
 Route::get('/order',[OrderController::class,'index'])->name('order.index');
 Route::get('/order/{id}',[OrderController::class,'show'])->name('order.show');
-// Route::post('/add-order',[OrderController::class,'store']);
+Route::post('/add-order',[OrderController::class,'store']);
 // Route::post('/delete-order/{id}',[OrderController::class,'destroy'])->name('order.destroy');
 // Route::post('/update-order/{id}',[OrderController::class,'update']);
 

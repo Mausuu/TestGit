@@ -14,16 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::table('order', function (Blueprint $table) {
-            $table->unsignedBigInteger('cart_id');
+            $table->unsignedBigInteger('id_user');
          
-            $table->foreign('cart_id')->references('id')->on('cart');
+            $table->foreign('id_user')->references('id')->on('users');
         });
 
-        Schema::table('product', function (Blueprint $table) {
-            $table->unsignedBigInteger('cat_id');
-         
-            $table->foreign('cat_id')->references('id')->on('category');
-        });
+        
     }
 
     /**

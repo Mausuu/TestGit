@@ -18,18 +18,35 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         //
+        $order=new Order();
+        $order->id_user=$request->id_user;
+        $order->diachinguoinhan=$request->diachinguoinhan;
+        $order->trangthai=$request->trangthai;
+        $order->thanhtoan=$request->thanhtoan;
+        $order->sdt=$request->sdt;
+        $order->ngaydat=$request->ngaydat;
        
+        $order->save();
+        return response()->json(
+            [
+                'status' =>200,
+                'message' => 'Thêm thành công'
+            ]
+            );
     }
        
     public function index()
     {
         //
         $order = Order::
-            join('cart', 'order.cart_id', '=', 'cart.id')
+            join('users', 'order.id_user', '=', 'users.id')
+            ->join('cart','cart.id_users', '=', 'users.id')
+            ->join('product','cart.id_product', '=', 'product.id')
             ->select(
                 'order.*', 
-                'cart.id_product as id_product',
-                'cart.id_users as id_users',
+                'product.price','product.name_product',
+                 'users.name',
+                 'cart.product_qty'
                 )
             ->get();        
             return response()->json($order);       
