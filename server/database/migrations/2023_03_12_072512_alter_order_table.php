@@ -18,6 +18,12 @@ return new class extends Migration
          
             $table->foreign('cart_id')->references('id')->on('cart');
         });
+
+        Schema::table('product', function (Blueprint $table) {
+            $table->unsignedBigInteger('cat_id');
+         
+            $table->foreign('cat_id')->references('id')->on('category');
+        });
     }
 
     /**

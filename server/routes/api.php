@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,3 +70,13 @@ Route::post('/cart-add',[CartController::class,'store']);
 Route::post('/cart-update/{id}',[CartController::class,'update']);
 Route::get('/cart/{id}', [CartController::class, 'show']);
 Route::get('/cart-delete/{id}', [CartController::class, 'destroy']);
+
+//
+Route::get('/order',[OrderController::class,'index'])->name('order.index');
+Route::get('/order/{id}',[OrderController::class,'show'])->name('order.show');
+// Route::post('/add-order',[OrderController::class,'store']);
+// Route::post('/delete-order/{id}',[OrderController::class,'destroy'])->name('order.destroy');
+// Route::post('/update-order/{id}',[OrderController::class,'update']);
+
+
+
