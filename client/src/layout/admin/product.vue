@@ -160,7 +160,7 @@ export default {
       name_product: '',
       price: '',
       detail: '',
-      avatar: null,
+      avatar: '',
       quantity:'',
       productCategory:''
   
