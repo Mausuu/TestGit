@@ -39,7 +39,7 @@ class ProductSeeder extends Seeder
                 "name_product" => "Cherry Mx Pro",
                 "price" =>  "200000",
                 "avatar"  => "pr3.jpg",
-                "url"   =>"http://localhost/images/",
+                "url"   =>"http://127.0.0.1:8000/images/default.jpg",
                 "cat_id"  =>"2",
                 "detail"  => "cxcccccc",
                 "quantity"  =>"10",

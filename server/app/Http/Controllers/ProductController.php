@@ -58,7 +58,7 @@ class ProductController extends Controller
        else{
             $product->avatar='default.jpg';
        }
-        $product->url='http://127.0.0.1:8000/images';
+        $product->url='http://127.0.0.1:8000/images/'.$product->avatar;
         $product->cat_id=$request->cat_id;
         $product->detail=$request->detail;
         $product->quantity=$request->quantity;
