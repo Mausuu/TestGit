@@ -74,10 +74,10 @@ class ProductController extends Controller
     {
         $data=$request->all();
         $product =Product::find($id);
-        $product->name_product=$data['nameproduct'];
+        $product->name_product=$data['name_product'];
         $product->price=$data['price'];
         if($request['avatar']){
-            Storage::disk('public')->delete($product->avatar);//
+            Storage::disk('public')->delete($product->avatar);
             $img=$request['avatar'];
             $nameImg=time().'_'.$img->getClientOriginalName();
             Storage::disk('public')->put($nameImg,File::get($img));
