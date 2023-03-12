@@ -12,4 +12,7 @@ class Cart extends Model
     protected $fillable=['id','id_product','id_users','product_qly'];
     protected $primaryKey='id';
     protected $table='cart';
+    public function order(){
+        return $this->hasOne(Order::class,'id','id');
+    }
 }
