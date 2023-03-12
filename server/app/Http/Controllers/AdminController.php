@@ -40,13 +40,13 @@ class AdminController extends Controller
         if($request['avatar']){
             $img=$request['avatar'];
             $nameImg=time().'_'.$img->getClientOriginalName();
-            Storage::disk('public/')->put($nameImg,File::get($img));
+            Storage::disk('public')->put('images/' . $nameImg, File::get($img));
             $admin->avatar=$nameImg;
         }
        else{
             $admin->avatar='default.jpg';
        }
-        $admin->url='http://127.0.0.1:8000/images';
+       $admin->url='http://127.0.0.1:8000/images/'.$admin->avatar;
         $admin->save();
         return response()->json(
             [

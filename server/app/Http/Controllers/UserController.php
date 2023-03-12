@@ -39,7 +39,7 @@ class UserController extends Controller
          else{
             $user->avatar='default.jpg';
          }
-        $user->url='http://127.0.0.1:8000/images';
+        $user->url='http://127.0.0.1:8000/images/'.$user->avatar;
         $user->save();   
         return response()->json(
             [
