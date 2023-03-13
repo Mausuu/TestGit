@@ -17,7 +17,7 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-       =
+   
         $order=new Order();
         $order->id_user=$request->id_user;
         $order->diachinguoinhan=$request->diachinguoinhan;
