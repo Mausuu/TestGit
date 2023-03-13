@@ -81,11 +81,11 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-           $token = $user->//createToken('API Token')->accessToken;
+            $token = $user->createToken('API Token')->accessToken;
             $user = $user; 
             return response()->json([
                 'status' => 202,
-               'token' => $token,
+                'token' => $token,
                 'user' => $user,       
             ]);
         } else {

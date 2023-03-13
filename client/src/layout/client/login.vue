@@ -53,8 +53,7 @@ export default {
      }
     },
     methods:
-    {
-        
+    {       
         async login()
         {
             const login = await axios.post(

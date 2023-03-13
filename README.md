@@ -3,4 +3,4 @@
 4.Run php artisan key:generate
 5.Run php artisan migrate
 php artisan db:seed
-6.Run php artisan serve
+6.Run php artisan  migrate:refresh

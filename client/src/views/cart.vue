@@ -40,7 +40,7 @@
                     <div class="col text-right">{{sumprice()}}</div>
                 </div>
             
-                <button class="btn">Thanh toán</button>
+                <router-link class="btn" to="/order">Thanh toán</router-link>
                 <button class="btn" @click="update()">Cập nhập giỏ hàng</button>
 
               
@@ -147,10 +147,7 @@ export default
       }
      
     },
-      update()
-      {
-        window.location.reload()
-      }
+     
     },
 
 }

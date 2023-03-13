@@ -27,23 +27,9 @@
           <li class="nav-item px-2 py-2 border-0">
             <a class="nav-link text-uppercase text-dark">VỀ CHÚNG TÔI</a>
           </li>
+          
           <li class="nav-item px-2 py-2 border-0">
-            <a class="nav-link text-uppercase text-dark">ĐĂNG XUẤT</a>
-          </li>
-
-
-          <li class="nav-item dropdown px-2 py-2">
-            <a class="nav-link dropdown-toggle text-uppercase text-dark" href="#" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              TÀI KHOẢN
-            </a>
-            <ul class="dropdown-menu">
-              <li> <router-link :to="{ name: 'login_client' }" class="dropdown-item text-uppercase text-dark">ĐĂNG
-                  NHẬP</router-link></li>
-              <li> <router-link :to="{ name: 'register_client' }" class="dropdown-item text-uppercase text-dark">ĐĂNG
-                  KÝ</router-link></li>
-             
-            </ul>
+            <a @click="handleButtonClick" class="nav-link text-uppercase text-dark">{{buttonLabel}}</a>
           </li>
         </ul>
       </div>
@@ -55,10 +41,45 @@
 </template>
 
 
+<script>
+export default {
+  data() {
+    return {
+      buttonLabel:'Đăng nhập'
+    }
+  },
+  computed: {
+    buttonLabel() {
+      let user=localStorage.getItem("user-info");
+      if (user) {
+        this.buttonLabel= 'Đăng xuất'
+       
+      } else {
+        this.buttonLabel = 'Đăng nhập';
+      }
+      return this.buttonLabel
+    },
+  },
+  methods:
+  {
+    handleButtonClick()
+    {
+     if(this.buttonLabel == 'Đăng nhập')
+     {
+      this.$router.push({ name:'login_client'})
+     }
+     else if((this.buttonLabel == 'Đăng xuất'))
+     {
+      localStorage.removeItem('user-info')
+      this.$router.push({ name:'login_client'})
+     }
+    }
+  }
+};
+</script>
 
-
-
-
-
-
-
+<style>
+a:hover{
+  cursor: pointer;
+}
+</style>
