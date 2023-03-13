@@ -17,14 +17,14 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        //
+   
         $order=new Order();
         $order->id_user=$request->id_user;
         $order->diachinguoinhan=$request->diachinguoinhan;
-        $order->trangthai=$request->trangthai;
-        $order->thanhtoan=$request->thanhtoan;
+        $order->trangthai='dadat';
+        $order->thanhtoan='COD';
         $order->sdt=$request->sdt;
-        $order->ngaydat=$request->ngaydat;
+        //$order->ngaydat=$request->ngaydat;
        
         $order->save();
         return response()->json(

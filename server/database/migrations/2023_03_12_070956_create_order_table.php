@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('trangthai',255);
             $table->string('thanhtoan',255);
             $table->integer('sdt');
-            $table->dateTime('ngaydat' ,$precision = 0);
+            $table->timestamp('ngaydat')->nullable();
         });
     }
 
