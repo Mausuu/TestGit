@@ -12,6 +12,7 @@ class SendMailController extends Controller
     //
     function demo1()
     {
-        Mail::to('ntnguyen09032001@gmail.com')->send(new DemoSendmail);
+        //dia  chi  khach hang
+        Mail::to('nguyen.nhut.99.2017@gmail.com')->send(new DemoSendmail);
     }
 }
