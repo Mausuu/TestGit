@@ -24,7 +24,7 @@ class OrderController extends Controller
         $order->trangthai=$request->trangthai;
         $order->thanhtoan=$request->thanhtoan;
         $order->sdt=$request->sdt;
-        $order->ngaydat=$request->ngaydat;
+        //$order->ngaydat=$request->ngaydat;
        
         $order->save();
         return response()->json(
