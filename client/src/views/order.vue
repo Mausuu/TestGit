@@ -1,51 +1,70 @@
 <template>
     <div class="body">
         <div class="card">
-       <div class="row">
-           <div class="col-md-6 cart">
-               <div class="title">
-                   <div class="row">
-                       <div class="col"><h4><b>Thông tin khách hàng</b></h4></div>
-                     
-                   </div>
-               </div>    
-               
-               
-               <div class="back-to-shop">  <router-link to="/">&leftarrow;<span class="text-muted">Tiếp tục mua sắm</span></router-link></div>
-           </div>
-           <div class="col-md-6 summary">
-           <div class="col"><h4><b>Hóa đơn</b></h4></div>
-               <div class="col align-self-center text-right text-muted"> Tống có: {{sumqty()}} sản phẩm</div>
-               <div class="row border-top border-bottom" >
-                <div class="row main align-items-center"  v-for="cart in carts">
-                    <div class="col-2"><img class="img-fluid" :src=cart.url ></div>
-                    <div class="col">
-                        <div class="row text-muted">{{ cart.name_product }}</div>
-                        <!-- <div class="row">Cotton T-shirt</div> -->
+            <div class="row">
+                <div class="col-md-6 cart">
+                    <div class="title">
+                        <div class="row">
+                            <div class="col" style="padding-bottom: 5x;">
+                                <h4><b>Thông tin khách hàng</b></h4>
+                            </div>
+
+                            <hr style="padding-bottom: 30px;">
+                            <label class="form-label">Tên khách hàng</label>
+                            <input class="form-control" v-model="name" disabled>
+
+                            <label class="form-label">Địa chỉ nhận hàng</label>
+                            <input type="text" class="form-control" v-model="address">
+
+                            <label class="form-label">Số điện thoại:</label>
+                            <input type="text" class="form-control" v-model="numberphone">
+
+                            <label class="form-label">Email</label>
+                            <input class="form-control" v-model="email" disabled>
+
+                            <hr style="padding-top: 10px;">
+                        </div>
                     </div>
+
+
+                    <div class="back-to-shop"> <router-link to="/cart">&leftarrow;<span class="text-muted">Quay lại giỏ
+                                hàng</span></router-link></div>
+                </div>
+                <div class="col-md-6 summary">
                     <div class="col">
-                        
-                        Số lượng : {{ cart.product_qty }}
+                        <h4><b>Hóa đơn</b></h4>
                     </div>
-                    <div class="col">{{
-                        formatPrice(cart.price * cart.product_qty) }}</div>
-                        
+                    <div class="col align-self-center text-right text-muted"> Tống có: {{ sumqty() }} sản phẩm</div>
+                    <div class="row border-top border-bottom">
+                        <div class="row main align-items-center" v-for="cart in carts">
+                            <div class="col-2"><img class="img-fluid" :src=cart.url></div>
+                            <div class="col">
+                                <div class="row text-muted">{{ cart.name_product }}</div>
+                                <!-- <div class="row">Cotton T-shirt</div> -->
+                            </div>
+                            <div class="col">
+
+                                Số lượng : {{ cart.product_qty }}
+                            </div>
+                            <div class="col">{{
+                                formatPrice(cart.price * cart.product_qty) }}</div>
+
+                        </div>
+                    </div>
+                    <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                        <div class="col">Tổng tiền</div>
+                        <div class="col text-right">{{ sumprice() }}</div>
+                    </div>
+
+                    <button class="btn" @click="addOrder">Đặt hàng</button>
+
+
+
                 </div>
             </div>
-               <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                   <div class="col">Tổng tiền</div>
-                   <div class="col text-right">{{sumprice()}}</div>
-               </div>
-           
-               <button class="btn" @click="addOrder">Đặt hàng</button>
-             
 
-             
-           </div>
-       </div>
-       
-   </div>
-   </div>
+        </div>
+    </div>
 </template>
 
 
@@ -57,14 +76,35 @@ export default
             return {
                 carts: [],
                 qty: "",
+                name: '',
+                address: '',
+                numberphone: '',
+                email: '',
+                users: []
+
             }
         },
         mounted() {
             this.getCart();
-
+            this.getuser()
         },
         methods:
         {
+            async getuser() {
+                let user = localStorage.getItem("user-info");
+                const a = JSON.parse(user);
+                try {
+                    const result = await axios.get(
+                        `${import.meta.env.VITE_API_BASE_URL}user/` + a.id
+                    );
+                    this.users = result.data;
+                    this.name = result.data.name;
+                    this.email = result.data.email;
+                    console.log(result);
+                } catch (e) {
+                    console.log(e);
+                }
+            },
             async getCart() {
                 try {
                     let user = localStorage.getItem("user-info");
@@ -79,6 +119,26 @@ export default
                     console.log(e);
                 }
             },
+            async addOrder() {
+                let user = localStorage.getItem("user-info");
+                const a = JSON.parse(user);
+                try {
+                    const order = await axios.post(
+                        `${import.meta.env.VITE_API_BASE_URL}add-order`,
+                        {
+                            id_user: a.id,
+                            diachinguoinhan: this.address,
+                            sdt: this.numberphone,
+                        }
+                    );
+                    if (order.data.status == 200) {
+                        alert('Đặt hàng thành công')
+                        this.$router.push({ name:'home'})
+                    }
+                } catch (e) {
+                    console.log(e);
+                }
+            },
             formatPrice(value) {
                 var formatter = new Intl.NumberFormat('vi-VN', {
                     style: 'currency',
@@ -87,6 +147,7 @@ export default
                 });
                 return formatter.format(value);
             },
+
             sumprice() {
                 var i = 0
                 var array = this.carts
@@ -96,6 +157,7 @@ export default
                 }
                 return this.formatPrice(sum)
             },
+
             sumqty() {
                 var i = 0
                 var array = this.carts
@@ -269,6 +331,7 @@ a:hover {
     background-repeat: no-repeat;
     background-position-x: 95%;
     background-position-y: center;
-}</style>
+}
+</style>
 
 
