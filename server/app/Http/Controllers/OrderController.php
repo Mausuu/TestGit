@@ -5,17 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\Cart;
+use App\Models\CartOrder;
 
 class OrderController extends Controller
 {
-    //
-    public function show($id)
-    {
-        //
-        $order = Order::all();
-        return response()->json($order);
-    }
-
+  
     public function store(Request $request)
     {
         $order = new Order();
@@ -35,11 +29,21 @@ class OrderController extends Controller
     }
     public function delete($id)
     {
+       
         $cart = Cart::where('id_users', $id)->get();
+        
         if ($cart) {
             foreach ($cart as $item) {
-                $item->delete();
+                $cartOrder = new CartOrder();
+                $cartOrder->id_users = $item->id_users;
+                $cartOrder->id_product = $item->id_product;
+                $cartOrder->product_qty = $item->product_qty;
+                $cartOrder->save();  
+                $item->delete();  
+            
+                
             }
+                     
             return response()->json(
                 [
                     'status' => 201,
@@ -57,18 +61,17 @@ class OrderController extends Controller
     public function index($id)
     {
          $order = Order::join('users', 'order.id_user', '=', 'users.id')
-        ->join('cart_order', 'cart_order.id_users', '=', 'users.id')
-        ->join('product', 'cart_order.id_product', '=', 'product.id')
+        ->join('cartorder', 'cartorder.id_users', '=', 'users.id')
+        ->join('product', 'cartorder.id_product', '=', 'product.id')
         ->where('users.id', '=', $id)
         ->select(
             'order.*',
             'product.price',
             'product.name_product',
             'users.name',
-            'cart_order.product_qty'
+            'cartorder.product_qty'
         )
         ->get();
-    dd($order); // In ra kết quả truy vấn để kiểm tra lỗi
     return response()->json($order);
     }
 }

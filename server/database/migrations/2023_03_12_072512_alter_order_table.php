@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('order', function (Blueprint $table) {
-            $table->id();
-            $table->string('diachinguoinhan',255);
-            $table->string('trangthai',255);
-            $table->string('thanhtoan',255);
-            $table->integer('sdt');
-            $table->timestamp('ngaydat');
+        Schema::table('order', function (Blueprint $table) {
+            $table->unsignedBigInteger('id_user');
+            $table->foreign('id_user')->references('id')->on('users');
         });
+
+        
     }
 
     /**
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order');
+        //
     }
 };
