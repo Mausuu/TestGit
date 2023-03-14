@@ -147,6 +147,10 @@ export default
       }
      
     },
+    update()
+    {
+        location.reload()
+    }
      
     },
 
