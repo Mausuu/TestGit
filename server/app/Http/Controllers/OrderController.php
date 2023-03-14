@@ -24,7 +24,6 @@ class OrderController extends Controller
         $order->trangthai = 'dadat';
         $order->thanhtoan = 'COD';
         $order->sdt = $request->sdt;
-        $order->ngaydat = $request->ngaydat;
         $order->save();
         $this->delete($request->id_user);
         return response()->json(
@@ -55,20 +54,21 @@ class OrderController extends Controller
             ]
         );
     }
-    public function index()
+    public function index($id)
     {
-        //
-        $order = Order::join('users', 'order.id_user', '=', 'users.id')
-            ->join('cart', 'cart.id_users', '=', 'users.id')
-            ->join('product', 'cart.id_product', '=', 'product.id')
-            ->select(
-                'order.*',
-                'product.price',
-                'product.name_product',
-                'users.name',
-                'cart.product_qty'
-            )
-            ->get();
-        return response()->json($order);
+         $order = Order::join('users', 'order.id_user', '=', 'users.id')
+        ->join('cart_order', 'cart_order.id_users', '=', 'users.id')
+        ->join('product', 'cart_order.id_product', '=', 'product.id')
+        ->where('users.id', '=', $id)
+        ->select(
+            'order.*',
+            'product.price',
+            'product.name_product',
+            'users.name',
+            'cart_order.product_qty'
+        )
+        ->get();
+    dd($order); // In ra kết quả truy vấn để kiểm tra lỗi
+    return response()->json($order);
     }
 }
