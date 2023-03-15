@@ -42,7 +42,7 @@
                 <td>
                   <button  type="button" class="btn btn-primary"
                         data-bs-toggle="modal" data-bs-target="#staticBackdrop-edit"
-                        @click="senduser(user.id)">
+                        @click="senduser(user)">
                         Chỉnh sửa
                 </button>
                 </td>
@@ -95,7 +95,7 @@
     data() {
       return {
        users: [],  
-        selectuser:'',
+        
         name:"",
         mail:"",
         id:""
@@ -107,7 +107,9 @@
     methods: {
   
       senduser(user){
-        this.selectuser = user;
+        this.name = user.name;
+        this.mail=user.email;
+        this.id=user.id;
       },
       
       reloadPage() {
@@ -133,11 +135,6 @@
         } catch (error) {
           this.error = error.response.data
         }
-      }, 
-      senduser(id)
-      {
-       this.id=id
-       console.log(this.id)
       },
      async updateUser()
       {

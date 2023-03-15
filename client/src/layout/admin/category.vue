@@ -132,8 +132,6 @@
         this.id=a.id
       },
       
-     
-
       async getcategory() {
         try {
           const result = await axios.get(
