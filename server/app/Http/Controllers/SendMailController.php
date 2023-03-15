@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Mail\DemoSendmail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
-use Mail;
 
 class SendMailController extends Controller
 {

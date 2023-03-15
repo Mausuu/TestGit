@@ -9,19 +9,18 @@ use Illuminate\Http\Request;
 
 use App\Models\Cart;
 use App\Models\CartOrder;
-use Mail;
+use Illuminate\Support\Facades\Mail;
+
 class OrderController extends Controller
 {
   
     public function sendMail(Request $request,$id)
     {        
-          $order = Order::find($id);
-          $order->diachinguoinhan = $request->diachinguoinhan;
+          $order = Order::find($id);  
           $order->trangthai = 'Đã xác nhận';
-          $order->thanhtoan = $request->thanhtoan;
-          $order->sdt = $request->sdt;    
-          Mail::to($request->email)->send(new DemoSendmail($order));
-            return response()->json(['message' => 'Gửi thành công.']);
+          $order->save();  
+          Mail::to($request->email)->send(new DemoSendmail);
+          return response()->json($order);
  
     }
     public function store(Request $request)
