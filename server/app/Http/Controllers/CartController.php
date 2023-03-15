@@ -115,7 +115,7 @@ class CartController extends Controller
     public function update(Request $request, $id)
     {
         $cart = Cart::find($id);
-        $cart->product_qty = $request->product_qty;
+        $cart->product_qty = $request->product_qty;//so sánh số lượng của product nó giảm
         $cart->save();
         return response()->json(
             [

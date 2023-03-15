@@ -1,4 +1,7 @@
 <template>
+  <div>
+    <input type="file" ref="imageInput" @change="uploadImage">
+  </div>
     <br>
     <div class="container-fluid">
       <div class="">
@@ -68,37 +71,33 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form @submit.prevent="addProduct">
-              <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Tên sản phẩm</label>
-                <input type="text" class="form-control" v-model="name_product">
-              </div>
-              <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Giá sản phẩm</label>
-                <input type="text" class="form-control" v-model="price">
-              </div>
-              <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Mô tả</label>
-                <input type="text" class="form-control" v-model="detail">
-              </div>
-              <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Số lượng</label>
-                <input type="text" class="form-control" v-model="quantity">
-              </div>
-              <div class="mb-3">
-                <label for="avatar">Ảnh sản phẩm</label>
-                <input type="file" id="image" @change="setImage">
-              </div>
-              <div class="mb-3">
-                <select id="category" v-model="productCategory">
-                  <option v-for="category in categorys" :value="category.id">{{ category.cat_name }}</option>
-                </select>
-              </div>
+            <form @submit.prevent="saveProduct">
+              <label for="name_product">Tên sản phẩm:</label>
+              <input type="text" id="name_product" v-model="name_product" required>
+              <br>
+              <label for="price">Giá:</label>
+              <input type="number" id="price" v-model="price" required>
+              <br>
+              <label for="cat_id">Loại sản phẩm:</label>
+              <select id="cat_id" v-model="cat_id" required>
+                <option value="">Chọn loại sản phẩm</option>
+                <option v-for="category in categorys" :key="category.id" :value="category.id">{{ category.cat_name }}</option>
+              </select>
+              <br>
+              <label for="detail">Mô tả chi tiết:</label>
+              <textarea id="detail" v-model="detail" required></textarea>
+              <br>
+              <label for="quantity">Số lượng:</label>
+              <input type="number" id="quantity" v-model="quantity" required>
+              <br>
+              <label for="image">Hình ảnh:</label>
+              <input type="file" id="image" @change="onFileSelected">
+              <br>
+              <button type="submit" class="btn btn-secondary">Lưu sản phẩm</button>
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-            <button @click="addProduct" class="btn btn-secondary">Thêm</button>
           </div>
         </div>
       </div>
@@ -117,7 +116,7 @@
             <div class="modal-body">
               <div class="form-group">
                 <label>Tên sản phẩm:</label>
-                <input type="text" class="form-control" required :placeholder=selectProduct.name_product
+                <input type="text" class="form-control" required :placeholder=selectname_product
                   v-model="name_product">
               </div>
               <div class="form-group">
@@ -160,7 +159,7 @@
         name_product: '',
         price: '',
         detail: '',
-        avatar: '',
+        avatar: null,
         quantity:'',
         productCategory:''
     
@@ -172,7 +171,6 @@
   
     },
     methods: {
-  
       sendProduct(product) {
         this.selectProduct = product;
       },
@@ -204,26 +202,34 @@
           console.log(e);
         }
       },
-      setImage(event) {
-        this.avatar = event.target.files[0];
-      },
-      async addProduct(){  
-      try {
-        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}add-product/`,
-        {
-          name_product : this.name_product,
-          price : this.price,
-          detail: this.detail,
-          quantity:this.quantity,
-          avatar:this.avatar,
-          cat_id:this.productCategory
-        })
-        ;
-        console.log(response.data);
-        location.reload()
-      } catch (error) {
-        console.log(error.response.data);
-      }
+
+
+    
+      onFileSelected(event) {
+      this.avatar = event.target.files[0]
+    },
+      saveProduct() {
+      let formData = new FormData()
+      formData.append('name_product', this.name_product)
+      formData.append('price', this.price)
+      formData.append('cat_id', this.cat_id)
+      formData.append('detail', this.detail)
+      formData.append('quantity', this.quantity)
+      formData.append('avatar', this.avatar)
+
+      axios.post(`${import.meta.env.VITE_API_BASE_URL}add-product`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then(response => {
+        console.log(response.data)
+        // Thực hiện các thao tác cần thiết sau khi lưu sản phẩm thành công
+      })
+      .catch(error => {
+        console.log(error.response.data)
+        // Hiển thị thông báo lỗi cho người dùng
+      })
     },
   
       async deleteproduct(id) {
@@ -234,6 +240,7 @@
           this.error = error.response.data
         }
       },
+ 
   
     }
   };

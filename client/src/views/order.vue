@@ -58,8 +58,6 @@
 
                     <button class="btn" @click="addOrder">Đặt hàng</button>
 
-
-
                 </div>
             </div>
 
@@ -80,13 +78,15 @@ export default
                 address: '',
                 numberphone: '',
                 email: '',
-                users: []
+                users: [],
+               
 
             }
         },
         mounted() {
             this.getCart();
-            this.getuser()
+            this.getuser();
+
         },
         methods:
         {
@@ -113,7 +113,7 @@ export default
                         `${import.meta.env.VITE_API_BASE_URL}cart/` + a.id
                     );
                     this.carts = result.data;
-                    console.log(result);
+                    console.log(result.data.id_product);
 
                 } catch (e) {
                     console.log(e);
@@ -129,6 +129,8 @@ export default
                             id_user: a.id,
                             diachinguoinhan: this.address,
                             sdt: this.numberphone,
+                            id_product:this.idproduct,
+                            product_qty:this.qty
                         }
                     );
                     if (order.data.status == 200) {
@@ -331,6 +333,10 @@ a:hover {
     background-repeat: no-repeat;
     background-position-x: 95%;
     background-position-y: center;
+}
+.get
+{
+    display: none;
 }
 </style>
 
