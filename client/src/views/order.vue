@@ -14,10 +14,12 @@
                             <input class="form-control" v-model="name" disabled>
 
                             <label class="form-label">Địa chỉ nhận hàng</label>
-                            <input type="text" class="form-control" v-model="address">
-
+                            <input type="text" class="form-control" v-model="address" :class="{ 'is-invalid': !isValidAddress }">
+                            <div v-if="!isValidAddress" class="invalid-feedback">Vui lòng nhập địa chỉ hợp lệ</div>
+                            
                             <label class="form-label">Số điện thoại:</label>
-                            <input type="text" class="form-control" v-model="numberphone">
+                            <input type="text" class="form-control" v-model="numberphone" :class="{ 'is-invalid': !isValidNumberphone }">
+                            <div v-if="!isValidNumberphone" class="invalid-feedback">Vui lòng nhập số điện thoại hợp lệ</div>
 
                             <label class="form-label">Email</label>
                             <input class="form-control" v-model="email" disabled>
@@ -53,7 +55,7 @@
                     </div>
                     <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                         <div class="col">Tổng tiền</div>
-                        <div class="col text-right">{{ sumprice() }}</div>
+                        <div class="col text-right">{{ formatPrice(sumprice()) }}</div>
                     </div>
 
                     <button class="btn" @click="addOrder">Đặt hàng</button>
@@ -79,8 +81,17 @@ export default
                 numberphone: '',
                 email: '',
                 users: [],
-               
 
+
+            }
+        },
+        computed: {
+            isValidAddress() {
+                return this.address !== '';
+            },
+            isValidNumberphone() {
+                const pattern = /^0\d{9}$/; // Kiểm tra định dạng số điện thoại
+                return pattern.test(this.numberphone);
             }
         },
         mounted() {
@@ -129,13 +140,14 @@ export default
                             id_user: a.id,
                             diachinguoinhan: this.address,
                             sdt: this.numberphone,
-                            id_product:this.idproduct,
-                            product_qty:this.qty
+                            id_product: this.idproduct,
+                            product_qty: this.qty,
+                            sum_cart: this.sumprice()
                         }
                     );
                     if (order.data.status == 200) {
                         alert('Đặt hàng thành công')
-                        this.$router.push({ name:'home'})
+                        this.$router.push({ name: 'home' })
                     }
                 } catch (e) {
                     console.log(e);
@@ -157,7 +169,7 @@ export default
                 for (i = 0; i < array.length; i++) {
                     sum += array[i].price * array[i].product_qty
                 }
-                return this.formatPrice(sum)
+                return sum
             },
 
             sumqty() {
@@ -167,7 +179,7 @@ export default
                 for (i = 0; i < array.length; i++) {
                     sum += array[i].product_qty
                 }
-                return (sum)
+                return sum
             },
         }
     }
@@ -334,8 +346,8 @@ a:hover {
     background-position-x: 95%;
     background-position-y: center;
 }
-.get
-{
+
+.get {
     display: none;
 }
 </style>

@@ -7,9 +7,9 @@
       </router-link>
 
       <div class="order-lg-2 nav-btns">
-        <router-link to="/cart"> <button type="button" class="btn position-relative">
+        <button type="button" class="btn position-relative" @click="checkCart">
           <i class="fa fa-shopping-cart"></i>
-        </button></router-link>
+        </button>
        
       </div>
 
@@ -73,6 +73,18 @@ export default {
       localStorage.removeItem('user-info')
       this.$router.push({ name:'login_client'})
      }
+    },
+    checkCart()
+    {
+      let user=localStorage.getItem("user-info")
+      if(user)
+      {
+        this.$router.push({ name: 'cart' })
+      }
+      else
+      {
+        alert('Hãy đăng nhập để xem giỏ hàng')
+      }
     }
   }
 };

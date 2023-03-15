@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('thanhtoan',255);
             $table->integer('sdt');
             $table->timestamp('ngaydat');
+            $table->float('sum_cart');
         });
     }
 

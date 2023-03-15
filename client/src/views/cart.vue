@@ -89,11 +89,11 @@ export default
     sumprice()
     {
         var i=0
-        var array =  this.carts
+        var array = this.carts
         var sum=0;
       for ( i=0;i<array.length;i++)
       {    
-        sum+=array[i].price*array[i].product_qty     
+        sum+=(array[i].price*array[i].product_qty )  
       }
       return this.formatPrice(sum)
     },

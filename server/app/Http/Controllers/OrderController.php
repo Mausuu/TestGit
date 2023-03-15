@@ -15,9 +15,10 @@ class OrderController extends Controller
         $order = new Order();
         $order->id_user = $request->id_user;
         $order->diachinguoinhan = $request->diachinguoinhan;
-        $order->trangthai = 'dadat';
-        $order->thanhtoan = 'COD';
+        $order->trangthai = 'Đã đặt';
+        $order->thanhtoan = 'Thanh toán tiền mặt';
         $order->sdt = $request->sdt;
+        $order->sum_cart = $request->sum_cart;
         $order->save();
         $this->delete($request->id_user);
         return response()->json(
@@ -61,17 +62,27 @@ class OrderController extends Controller
     public function index($id)
     {
          $order = Order::join('users', 'order.id_user', '=', 'users.id')
-        ->join('cartorder', 'cartorder.id_users', '=', 'users.id')
-        ->join('product', 'cartorder.id_product', '=', 'product.id')
         ->where('users.id', '=', $id)
         ->select(
             'order.*',
-            'product.price',
-            'product.name_product',
             'users.name',
-            'cartorder.product_qty'
         )
         ->get();
     return response()->json($order);
     }
+    // public function index($id)
+    // {
+    //      $order = Order::join('users', 'order.id_user', '=', 'users.id')
+    //     ->join('cartorder', 'cartorder.id_users', '=', 'users.id')
+    //     ->join('product', 'cartorder.id_product', '=', 'product.id')
+    //     ->where('users.id', '=', $id)
+    //     ->select(
+    //         'order.*',
+    //         'product.price',
+    //         'users.name',
+    //         'cartorder.product_qty'
+    //     )
+    //     ->get();
+    // return response()->json($order);
+    // }
 }

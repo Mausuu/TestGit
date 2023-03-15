@@ -64,13 +64,17 @@ class ProductController extends Controller
         $name = time() . '_' . $image->getClientOriginalName();
         $path = $image->move(public_path('images'), $name);
 
-        // Kiểm tra nếu ảnh đã tồn tại thì xóa ảnh cũ trước khi lưu ảnh mới
-        if (Storage::exists('public/images/' . $name)) {
-            Storage::delete('public/images/' . $name);
-        }
+        // // Kiểm tra nếu ảnh đã tồn tại thì xóa ảnh cũ trước khi lưu ảnh mới
+        // if (Storage::disk('public')->exists('images/' . $name)) {
+        //     Storage::disk('public')->delete('images/' . $name);
+        // }
 
         $product = new Product();
         $product->name_product = $request->name_product;
+        if (Product::where('name_product', $request->name_product)->exists()) {
+            return response()->json(['error' => 'Tên sản phẩm đã tồn tại'], 400);
+        }
+        else{
         $product->price = $request->price;
         $product->avatar = $name;
         $product->url = 'http://127.0.0.1:8000/images/' . $product->avatar;
@@ -78,7 +82,8 @@ class ProductController extends Controller
         $product->detail = $request->detail;
         $product->quantity = $request->quantity;
         $product->save();
-
+        }
+    
         return response()->json(['success' => true, 'product' => $product], 201);
     }
     public function update(Request $request, $id)

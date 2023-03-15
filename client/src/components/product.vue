@@ -107,6 +107,7 @@ export default {
     },
     //ham lay tong tien  
     async addCart(id) { 
+      
       let user = localStorage.getItem("user-info");
       if(user)
       {
