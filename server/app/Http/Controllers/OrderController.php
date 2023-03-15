@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\Cart;
+use App\Models\CartOrder;
 
 class OrderController extends Controller
 {
@@ -35,9 +36,11 @@ class OrderController extends Controller
     }
     public function delete($id)
     {
+        $cartorder = new CartOrder();
         $cart = Cart::where('id_users', $id)->get();
         if ($cart) {
             foreach ($cart as $item) {
+                $cartorder->save($item);
                 $item->delete();
             }
             return response()->json(
