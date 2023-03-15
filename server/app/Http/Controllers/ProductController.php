@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
@@ -44,31 +45,30 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $product =new Product();
-        $product->name_product=$request->name_product;
-        $product->price=$request->price;
-
-        if($request['avatar']){
-            $img=$request['avatar'];
-            $avatar=time().'_'.$img->getClientOriginalName();
-            Storage::disk('public')->put($avatar,File::get($img));
-            $product->avatar=$avatar;
+        $validator = Validator::make($request->all(), [
+            'avatar' => 'required|image|max:2048'
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->first()], 400);
         }
-       else{
-            $product->avatar='default.jpg';
-       }
-        $product->url='http://127.0.0.1:8000/images/'.$product->avatar;
-        $product->cat_id=$request->cat_id;
-        $product->detail=$request->detail;
-        $product->quantity=$request->quantity;
+        
+        $image = $request->file('avatar');
+        $name = time() . '_' . $image->getClientOriginalName();
+        $path = $image->move(public_path('images'), $name);
+        
+        $product = new Product();
+        $product->name_product = $request->name_product;
+        $product->price = $request->price;        
+        $product->avatar = $name;
+        $product->url = 'http://127.0.0.1:8000/images/'.$product->avatar;
+        $product->cat_id = $request->cat_id;
+        $product->detail = $request->detail;
+        $product->quantity = $request->quantity;
         $product->save();
-        return response()->json(
-            [
-                'status' =>200,
-                'message' => 'Thêm thành công'
-            ]
-        );
+        
+        return response()->json(['success' => true, 'product' => $product], 201);
+        
     }
     public function update(Request $request, $id)
     {
