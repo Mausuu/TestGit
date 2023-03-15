@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+
 class ProductController extends Controller
 {
     /**
@@ -17,14 +18,13 @@ class ProductController extends Controller
     public function index()
     {
         //
-        $users = Product::
-            join('category', 'product.cat_id', '=', 'category.id')
+        $users = Product::join('category', 'product.cat_id', '=', 'category.id')
             ->select(
-                'product.*', 
+                'product.*',
                 'category.cat_name as name_cat'
-                )
-            ->get();        
-            return response()->json($users);       
+            )
+            ->get();
+        return response()->json($users);
     }
 
     /**
@@ -45,56 +45,66 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // Kiểm tra xem trường ảnh đại diện đã được thêm chưa
+        if (!$request->hasFile('avatar')) {
+            return response()->json(['error' => 'Vui lòng chọn ảnh đại diện'], 400);
+        }
+
+
         $validator = Validator::make($request->all(), [
             'avatar' => 'required|image|max:2048'
         ]);
-        
+
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->first()], 400);
         }
-        
+
+
         $image = $request->file('avatar');
         $name = time() . '_' . $image->getClientOriginalName();
         $path = $image->move(public_path('images'), $name);
-        
+
+        // Kiểm tra nếu ảnh đã tồn tại thì xóa ảnh cũ trước khi lưu ảnh mới
+        if (Storage::exists('public/images/' . $name)) {
+            Storage::delete('public/images/' . $name);
+        }
+
         $product = new Product();
         $product->name_product = $request->name_product;
-        $product->price = $request->price;        
+        $product->price = $request->price;
         $product->avatar = $name;
-        $product->url = 'http://127.0.0.1:8000/images/'.$product->avatar;
+        $product->url = 'http://127.0.0.1:8000/images/' . $product->avatar;
         $product->cat_id = $request->cat_id;
         $product->detail = $request->detail;
         $product->quantity = $request->quantity;
         $product->save();
-        
+
         return response()->json(['success' => true, 'product' => $product], 201);
-        
     }
     public function update(Request $request, $id)
     {
-        $data=$request->all();
-        $product =Product::find($id);
-        $product->name_product=$data['name_product'];
-        $product->price=$data['price'];
-        if($request['avatar']){
+        $data = $request->all();
+        $product = Product::find($id);
+        $product->name_product = $data['name_product'];
+        $product->price = $data['price'];
+        if ($request['avatar']) {
             Storage::disk('public')->delete($product->avatar);
-            $img=$request['avatar'];
-            $nameImg=time().'_'.$img->getClientOriginalName();
-            Storage::disk('public')->put($nameImg,File::get($img));
-            $product->avatar=$nameImg;
+            $img = $request['avatar'];
+            $nameImg = time() . '_' . $img->getClientOriginalName();
+            Storage::disk('public')->put($nameImg, File::get($img));
+            $product->avatar = $nameImg;
+        } else {
+            $product->avatar = 'default.jpg';
         }
-       else{
-            $product->avatar='default.jpg';
-       }
-        
-        $product->cat_id=$data['cat_id'];
-        $product->detail=$data['detail'];
-        $product->quantity=$data['quantity'];
-      
+
+        $product->cat_id = $data['cat_id'];
+        $product->detail = $data['detail'];
+        $product->quantity = $data['quantity'];
+
         $product->save();
         return response()->json(
             [
-                'status' =>200,
+                'status' => 200,
                 'message' => 'Sửa thành công'
             ]
         );
@@ -109,9 +119,8 @@ class ProductController extends Controller
     public function show($id)
     {
         //
-        $product=Product::all();
+        $product = Product::all();
         return response()->json($product);
-       
     }
 
     /**
@@ -132,9 +141,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
-        //
-    
+
+    //
+
 
     /**
      * Remove the specified resource from storage.
@@ -142,14 +151,14 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
-        //
-    
+
+    //
+
     public function destroy($id)
     {
 
-        $product =Product::find($id);
-        Storage::disk('public')->delete($product->avatar);//
+        $product = Product::find($id);
+        Storage::disk('public')->delete($product->avatar); //
         return $product->delete();
         return response()->json(
             [
@@ -157,6 +166,5 @@ class ProductController extends Controller
                 'message' => 'Delete xong !!!'
             ]
         );
-        
     }
 }
