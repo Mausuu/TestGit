@@ -23,7 +23,7 @@
         </div>
         
         <button class="btn btn-primary" @click="getOrder" style="margin-bottom: 20px;">Lấy danh sách đơn hàng</button>
-        
+
         <h4 class="text-black">Danh sách đơn hàng</h4>
         
         <table class="table table-striped table-hover">
@@ -32,6 +32,7 @@
               <th>Tên khách hàng</th>        
               <th>Địa chỉ</th>
               <th>Số điện thoại</th>
+              <th>Email</th>
               <th>Trạng thái</th>
               <th>Hình thức thanh toán</th>
               <th>Ngày đặt hàng</th>
@@ -45,6 +46,7 @@
               <td>{{ order.name }}</td>
               <td>{{ order.diachinguoinhan }}</td>
               <td> (+84) {{ order.sdt }}</td>
+              <td> {{order.email}} </td>
               <td>{{ order.trangthai }}</td>
               <td>{{ order.thanhtoan }}</td>
               <td>{{ order.ngaydat }}</td>     
@@ -75,10 +77,11 @@ export default {
   },
   mounted() {
     this.getuser(),
-      this.getOrder()
+    this.getOrder()
 
   },
   methods: {
+
     formatPrice(value) {
         var formatter = new Intl.NumberFormat('vi-VN', {
             style: 'currency',
@@ -87,6 +90,7 @@ export default {
         });
         return formatter.format(value);
     },
+
     async getuser() {
       try {
         const result = await axios.get(
@@ -114,7 +118,21 @@ export default {
 
     },
 
+   async senmail ()
+    {
+      try {
+          const send = await axios.post(
+            `${import.meta.env.VITE_API_BASE_URL}sendMail`,
+            {
+              cat_name: this.cat_name, 
+            }
+          ) ; 
+        
+        } catch (e) {
+          console.log(e);
+    }
   }
+}
 };
 
 </script>

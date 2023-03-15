@@ -142,7 +142,8 @@ export default
                             sdt: this.numberphone,
                             id_product: this.idproduct,
                             product_qty: this.qty,
-                            sum_cart: this.sumprice()
+                            sum_cart: this.sumprice(),
+                            email:this.email
                         }
                     );
                     if (order.data.status == 200) {

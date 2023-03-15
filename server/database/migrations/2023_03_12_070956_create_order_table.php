@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('diachinguoinhan',255);
             $table->string('trangthai',255);
             $table->string('thanhtoan',255);
+            $table->string('email',255);
+
             $table->integer('sdt');
             $table->timestamp('ngaydat');
             $table->float('sum_cart');
