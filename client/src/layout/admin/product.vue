@@ -238,7 +238,7 @@ export default {
     },
 
     onFileSelectedNew(event) {
-      this.avatar_new = event.target.files[0]
+      this.avatar_new = event.target.files[0];
     },
     saveProduct() {
       let formData = new FormData()
@@ -274,22 +274,29 @@ export default {
     },
 
     editProduct() {
-  axios.post(`${import.meta.env.VITE_API_BASE_URL}update-product/` + this.id_product, {
-    name_product: this.name_product,
-    detail: this.detail,
-    price: this.price,
-    cat_id: this.selectedCategory,
-    avatar: this.avatar_new,
-    quantity:this.quantity,
+ 
+  let formData = new FormData()
+      formData.append('name_product', this.name_product)
+      formData.append('price', this.price)
+      formData.append('cat_id', this.selectedCategory)
+      formData.append('detail', this.detail)
+      formData.append('quantity', this.quantity)
+      formData.append('avatar', this.avatar_new)
 
-  })
-  .then(response => {
-    alert("Sửa sản phẩm thành công!");
-  })
-  .catch(error => {
-    console.log(error);
-  }); 
-  console.log(this.price)
+      axios.post(`${import.meta.env.VITE_API_BASE_URL}update-product/`+this.id_product, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then(response => {
+          console.log(response.data)
+          alert('update thành công')
+          location.reload();
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          // Hiển thị thông báo lỗi cho người dùng
+        })
 
 },
   }

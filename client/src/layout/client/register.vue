@@ -85,10 +85,13 @@ export default {
 					email: this.email,
 				});
 			console.warn(register)
-			if (register.status == 200) {
-				localStorage.setItem("user-info", JSON.stringify(register.data.name));
+			if(register .data.status == 402)
+			{
+				alert('mail trùng')
+			}
+			else if (register.status == 200) {
 				// this.$router.push({ name: 'home' })
-				this.$router.push({ name: 'login' })
+				this.$router.push({ name: 'login_client' })
 
 				console.log('a')
 			}

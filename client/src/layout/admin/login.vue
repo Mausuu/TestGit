@@ -64,6 +64,7 @@ export default {
 
             axios.post(`${import.meta.env.VITE_API_BASE_URL}admin/login?email=${this.email}&password=${this.password}`)
                 .then((response) => {
+                  
                     if (response.data.status == 202) {
                        localStorage.setItem("admin-info", JSON.stringify(response.data.admin));  
                         this.$router.push({ name: 'user' })

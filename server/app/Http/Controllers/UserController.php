@@ -23,13 +23,25 @@ class UserController extends Controller
         ->get();        
         return response()->json($users);
     }
+    
+    
     public function store(Request $request)
     {
  
         $user =new User();
         $user->name=$request->name;
         $user->email=$request->email;
+        
         $user->password=Hash::make($request->password);
+        
+       if (User::where('email', $request->email)->exists()) {
+          return response()->json(
+            [
+                'status' => 402,
+                'message' => 'Thêm xong !!!'
+            ]
+        );
+    }
         if($request['avatar']){
             $img=$request['avatar'];
             $nameImg=time().'_'.$img->getClientOriginalName();

@@ -76,9 +76,10 @@ class ProductController extends Controller
             return response()->json(['error' => 'Tên sản phẩm đã tồn tại'], 400);
         }
         else{
-        $product->price = $request->price;
+  
         $product->avatar = $name;
         $product->url = 'http://127.0.0.1:8000/images/' . $product->avatar;
+        $product->price = $request->price;
         $product->cat_id = $request->cat_id;
         $product->detail = $request->detail;
         $product->quantity = $request->quantity;
@@ -158,6 +159,7 @@ class ProductController extends Controller
     
         return response()->json(['success' => true, 'product' => $product], 200);
     }
+    
     /**
      * Display the specified resource.
      *
