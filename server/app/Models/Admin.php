@@ -9,9 +9,10 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
+use Laravel\Sanctum\HasApiTokens;
 class Admin extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
-    use HasFactory,Authenticatable, CanResetPassword;
+    use HasFactory,Authenticatable, CanResetPassword,HasApiTokens;
     public $timestamps=false;//set time to false
     protected $fillable = [
         'name',
