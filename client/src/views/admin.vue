@@ -51,4 +51,20 @@
 </template>
 <script>
 import '../assets/admin.js'
+export default
+{
+  mounted()
+    {
+     let admin=localStorage.getItem("admin-info");
+     if(admin)
+     {
+      console.log('oke')  
+     }
+     else
+     {
+      alert('Bạn chưa đăng nhập');
+      this.$router.push({name:'admin'})
+     }
+    },
+}
 </script>

@@ -106,13 +106,13 @@ class AdminController extends Controller
 
         if (Auth::guard('admin')->attempt($credentials)) {
 
-            $user = Auth::guard('admin')->user();
-            $token = $user->createToken('AdminToken')->accessToken;
-
+            $admin = Auth::guard('admin')->user();
+            $token = $admin->createToken('AdminToken')->accessToken;
             return response()->json([
                 'status'=> 202,
                 'message' => 'Đăng nhập thành công',
                 'token' => $token,
+                'admin'=>$admin
             ]);
         }
         else

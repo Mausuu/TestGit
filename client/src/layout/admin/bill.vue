@@ -12,7 +12,7 @@
 
         <div class="form-group" style="margin-bottom: 20px;">
           <label style=" display: block;
-          font-weight: bold;
+       font-weight: bold;
           margin-bottom: 5px;
           font-size:20px">Lựa chọn khách hàng:</label> <br>
           <select v-model="selectedUser">
@@ -43,7 +43,7 @@
           <br>
           <tbody v-for="order in orders.sort((a, b) => a.id - b.id)" >
             <tr>
-              <td>{{ order.name }}</td>
+              <td >{{ order.name }}</td>
               <td>{{ order.diachinguoinhan }}</td>
               <td> (+84) {{ order.sdt }}</td>
               <td> {{order.email}} </td>
@@ -51,7 +51,7 @@
               <td>{{ order.thanhtoan }}</td>
               <td>{{ order.ngaydat }}</td>     
               <td>{{  formatPrice(order.sum_cart) }}</td>     
-              <td><button class="btn btn-primary" @click="senmail">Xác nhận</button></td>  
+              <td><button class="btn btn-primary" @click="senmail(order)">Xác nhận</button></td>  
             </tr>     
           </tbody> 
           <tr>
@@ -118,13 +118,13 @@ export default {
 
     },
 
-   async senmail ()
+   async senmail (order)
     {
       try {
           const send = await axios.post(
             `${import.meta.env.VITE_API_BASE_URL}sendMail`,
             {
-              cat_name: this.cat_name, 
+               //
             }
           ) ; 
         

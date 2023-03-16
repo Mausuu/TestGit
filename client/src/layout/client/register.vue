@@ -56,12 +56,7 @@ export default {
 			name: "",
 		}
 	},
-	mounted() {
-		let user = localStorage.getItem("user-info");
-		if (user) {
-			this.$router.push({ name: 'home' })
-		}
-	},
+	
 	computed: {
 		isValidName() {
 			return this.name.length >= 2;
@@ -93,7 +88,7 @@ export default {
 			if (register.status == 200) {
 				localStorage.setItem("user-info", JSON.stringify(register.data.name));
 				// this.$router.push({ name: 'home' })
-				this.$router.push({ name: 'home' })
+				this.$router.push({ name: 'login' })
 
 				console.log('a')
 			}

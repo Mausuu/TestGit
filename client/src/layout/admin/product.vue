@@ -143,21 +143,21 @@
               <input type="text" class="form-control" required v-model="price">
             </div>
             <div class="form-group">
-              <label>Giá:</label>
+              <label>Số lượng:</label>
               <input type="text" class="form-control" required v-model="quantity">
             </div>
             <div class="form-group">
               <label>Danh mục sản phẩm</label>
               <form>
-                <select v-model="key" class="form-select" id="sel1" name="sellist1">        
-                  <option v-for="category in categorys">{{ category.cat_name }}</option>
+                <select  class="form-select" id="sel1" name="sellist1" v-model="selectedCategory">        
+                  <option v-for="category in categorys" :value="category.id">{{ category.cat_name }}</option>
                 </select>
               </form>
             </div>
 
             <div class="form-group">
               <label for="image">Hình ảnh:</label>
-              <input class="form-control" type="file" id="image" @change="onFileSelectedNew">
+              <input class="form-control" type="file" id="image" @change=" onFileSelectedNew">
               <br>
             </div>
           </div>
@@ -186,7 +186,7 @@ export default {
       avatar: null,
       avatar_new: null,
       quantity: '',
-      productCategory: ''
+      selectedCategory: ''
     };
   },
   mounted() {
@@ -278,17 +278,20 @@ export default {
     name_product: this.name_product,
     detail: this.detail,
     price: this.price,
-    category: this.key,
+    cat_id: this.selectedCategory,
     avatar: this.avatar_new,
-    quantity:this.quantity
+    quantity:this.quantity,
+
   })
   .then(response => {
     alert("Sửa sản phẩm thành công!");
   })
   .catch(error => {
     console.log(error);
-  });
-}
+  }); 
+  console.log(this.price)
+
+},
   }
 };
 

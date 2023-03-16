@@ -41,6 +41,14 @@ export default {
             password: ""
         }
     },
+    mounted()
+    {
+     let admin=localStorage.getItem("admin-info");
+     if(admin)
+     {
+        this.$router.push({ name:'user'})       
+     }
+    },
     computed: {
         isValidEmail() {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -57,8 +65,13 @@ export default {
             axios.post(`${import.meta.env.VITE_API_BASE_URL}admin/login?email=${this.email}&password=${this.password}`)
                 .then((response) => {
                     if (response.data.status == 202) {
+                       localStorage.setItem("admin-info", JSON.stringify(response.data.admin));  
                         this.$router.push({ name: 'user' })
                     }
+                    else
+            {
+                alert('Mật khẩu hoặc email không đúng !!!');
+            }
                 });
 
         }
