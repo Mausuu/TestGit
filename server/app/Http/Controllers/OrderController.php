@@ -9,20 +9,29 @@ use Illuminate\Http\Request;
 
 use App\Models\Cart;
 use App\Models\CartOrder;
+<<<<<<< HEAD
 use Mail;
+=======
+use Illuminate\Support\Facades\Mail;
+>>>>>>> 7aa7b4c739fcd2d0299b3dc1838e19202d44148e
 
 class OrderController extends Controller
 {
   
     public function sendMail(Request $request,$id)
     {        
-          $order = Order::find($id);
-          $order->diachinguoinhan = $request->diachinguoinhan;
+          $order = Order::find($id);  
           $order->trangthai = 'Đã xác nhận';
+<<<<<<< HEAD
           $order->thanhtoan = $request->thanhtoan;
           $order->sdt = $request->sdt;    
           Mail::to(email)->send(new DemoSendmail($order));
             return response()->json(['message' => 'Gửi thành công.']);
+=======
+          $order->save();  
+          Mail::to($request->email)->send(new DemoSendmail);
+          return response()->json($order);
+>>>>>>> 7aa7b4c739fcd2d0299b3dc1838e19202d44148e
  
     }
     

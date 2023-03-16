@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use App\Models\Cart;
 class DemoSendmail extends Mailable
 {
+    public $data;
     use Queueable, SerializesModels;
 
     /**
@@ -20,48 +21,18 @@ class DemoSendmail extends Mailable
      */
     public function __construct()
     {
-        //
+        $this->subject="Cảm ơn đã đặt hàng tại cửa hàng";
+        // $this->data=$data;
     }
 
     /**
-     * Get the message envelope.
+     * Build the message.
      *
-     * @return \Illuminate\Mail\Mailables\Envelope
+     * @return $this
      */
-    public function envelope()
-    {
-        return new Envelope(
-            subject: 'Demo Sendmail',
-        );
-    }
-
-    /**
-     * Get the message content definition.
-     *
-     * @return \Illuminate\Mail\Mailables\Content
-     */
-    public function content()
-    {
-        return new Content(
-            view: 'mail.demo',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array
-     */
-    public function attachments()
-    {
-        return [];
-    }
     public function build()
     {
-        // return $this->from('ntnguyen09032001@gmail.com','Cty Thành Nguyên')
-        // ->subject('welcome')
-        // ->markdown('client.mail.demo')
-        // ->with(['data'=> Cart::content()]);
-        return $this->view('mail.demo');
+        //trả về một mẫu mail với địa chỉ email, subject, nội dung từ view send_mail
+        return $this->subject($this->subject)->from('ntnguyen09032001@gmail.com')->view('mail.demo');
     }
 }
