@@ -68,14 +68,14 @@ class ProductController extends Controller
         if (Storage::exists('public/images/' . $name)) {
             Storage::delete('public/images/' . $name);
         }
-        
-        if (Product::where('name_product', $request->name_product)->exists()) {
-            return response()->json(['error' => 'Tên sản phẩm đã tồn tại'], 400);
-        }
 
         $product = new Product();
         
         $product->name_product = $request->name_product;
+        if (Product::where('name_product', $request->name_product)->exists()) {
+            return response()->json(['error' => 'Tên sản phẩm đã tồn tại'], 400);
+        }
+        else{
         $product->price = $request->price;
         $product->avatar = $name;
         $product->url = 'http://127.0.0.1:8000/images/' . $product->avatar;
@@ -83,38 +83,81 @@ class ProductController extends Controller
         $product->detail = $request->detail;
         $product->quantity = $request->quantity;
         $product->save();
-
+        }
+    
         return response()->json(['success' => true, 'product' => $product], 201);
     }
+    // public function update(Request $request, $id)
+    // {
+
+
+    //     $data = $request->all();
+    //     $product = Product::find($id);
+    //     $product->name_product = $data['name_product'];
+    //     $product->price = $data['price'];
+    //     if ($request['avatar']) {
+    //         Storage::disk('public')->delete($product->avatar);
+    //         $img = $request['avatar'];
+    //         $nameImg = time() . '_' . $img->getClientOriginalName();
+    //         Storage::disk('public')->put($nameImg, File::get($img));
+    //         $product->avatar = $nameImg;
+    //     } else {
+    //         $product->avatar = 'default.jpg';
+    //     }
+
+    //     $product->cat_id = $data['cat_id'];
+    //     $product->detail = $data['detail'];
+    //     $product->quantity = $data['quantity'];
+
+    //     $product->save();
+    //     return response()->json(
+    //         [
+    //             'status' => 200,
+    //             'message' => 'Sửa thành công'
+    //         ]
+    //     );
+    // }
     public function update(Request $request, $id)
     {
-        $data = $request->all();
         $product = Product::find($id);
-        $product->name_product = $data['name_product'];
-        $product->price = $data['price'];
-        if ($request['avatar']) {
-            Storage::disk('public')->delete($product->avatar);
-            $img = $request['avatar'];
-            $nameImg = time() . '_' . $img->getClientOriginalName();
-            Storage::disk('public')->put($nameImg, File::get($img));
-            $product->avatar = $nameImg;
-        } else {
-            $product->avatar = 'default.jpg';
+    
+        if (!$product) {
+            return response()->json(['error' => 'Không tìm thấy sản phẩm'], 404);
         }
-
-        $product->cat_id = $data['cat_id'];
-        $product->detail = $data['detail'];
-        $product->quantity = $data['quantity'];
-
+    
+        // Kiểm tra xem trường ảnh đại diện đã được thêm chưa
+        if ($request->hasFile('avatar')) {
+            $validator = Validator::make($request->all(), [
+                'avatar' => 'required|image|max:2048'
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()->first()], 400);
+            }
+    
+            $image = $request->file('avatar');
+            $name = time() . '_' . $image->getClientOriginalName();
+            $path = $image->move(public_path('images'), $name);
+    
+            // Xóa ảnh cũ trước khi lưu ảnh mới
+            if (Storage::exists('public/images/' . $product->avatar)) {
+                Storage::delete('public/images/' . $product->avatar);
+            }
+    
+            $product->avatar = $name;
+            $product->url = 'http://127.0.0.1:8000/images/' . $product->avatar;
+        }
+    
+        $product->name_product = $request->input('name_product', $product->name_product);
+        $product->price = $request->input('price', $product->price);
+        $product->cat_id = $request->input('cat_id', $product->cat_id);
+        $product->detail = $request->input('detail', $product->detail);
+        $product->quantity = $request->input('quantity', $product->quantity);
+    
         $product->save();
-        return response()->json(
-            [
-                'status' => 200,
-                'message' => 'Sửa thành công'
-            ]
-        );
+    
+        return response()->json(['success' => true, 'product' => $product], 200);
     }
-
     /**
      * Display the specified resource.
      *

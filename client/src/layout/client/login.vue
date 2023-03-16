@@ -11,7 +11,10 @@
                         <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                     <input type="email" placeholder="Email" v-model="email" />
+                    <span v-if="!isValidEmail">Email không hợp lệ</span>
+                    <br />
                     <input type="password" placeholder="Password" v-model="password" />
+                    <span v-if="!isValidPassword">Mật khẩu không hợp lệ</span>
                     <button @click="login()">Đăng nhập</button>
                 </div>
 
@@ -44,6 +47,15 @@ export default {
             password: ""
         }
     },
+    computed: {
+        isValidEmail() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(this.email);
+        },
+        isValidPassword() {
+            return this.password.length >= 8;
+        },
+    },
     mounted()
     {
      let user=localStorage.getItem("user-info");
@@ -66,7 +78,7 @@ export default {
             }
             else
             {
-                alert('login that bai');
+                alert('Mật khẩu hoặc email không đúng !!!');
             }
         }
     }

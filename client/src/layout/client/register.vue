@@ -11,10 +11,17 @@
 						<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 					</div>
 					<input type="text" placeholder="Tên tài khoản" v-model="name" />
-
+					<span v-if="!isValidName">Tên tài khoản không hợp lệ</span>
+		
 					<input type="email" placeholder="Email" v-model="email" />
+					<span v-if="!isValidEmail">Email không hợp lệ</span>
+				
 					<input type="password" placeholder="Mật khẩu" v-model="password" />
-					<input type="repassword" placeholder="Nhập lại" v-model="repassword" />
+					<span v-if="!isValidPassword">Mật khẩu không hợp lệ</span>
+				
+					<input type="password" placeholder="Nhập lại" v-model="repassword" />
+					<span v-if="!isValidRepassword">Mật khẩu nhập lại không đúng</span>
+					
 
 					<button @click="register()">Đăng ký</button>
 				</div>
@@ -40,7 +47,7 @@
 <script>
 
 export default {
-	
+
 	data() {
 		return {
 			email: "",
@@ -49,14 +56,27 @@ export default {
 			name: "",
 		}
 	},
-	mounted()
-    {
-     let user=localStorage.getItem("user-info");
-     if(user)
-     {
-        this.$router.push({ name:'home'})       
-     }
-    },
+	mounted() {
+		let user = localStorage.getItem("user-info");
+		if (user) {
+			this.$router.push({ name: 'home' })
+		}
+	},
+	computed: {
+		isValidName() {
+			return this.name.length >= 2;
+		},
+		isValidEmail() {
+			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			return emailRegex.test(this.email);
+		},
+		isValidPassword() {
+			return this.password.length >= 6;
+		},
+		isValidRepassword() {
+			return this.repassword === this.password;
+		},
+	},
 	methods:
 	{
 
@@ -71,12 +91,12 @@ export default {
 				});
 			console.warn(register)
 			if (register.status == 200) {
-                         localStorage.setItem("user-info", JSON.stringify(register.data.name));
-                        // this.$router.push({ name: 'home' })
-                        this.$router.push({ name:'home'})
-        
-                         console.log('a')
-                    }
+				localStorage.setItem("user-info", JSON.stringify(register.data.name));
+				// this.$router.push({ name: 'home' })
+				this.$router.push({ name: 'home' })
+
+				console.log('a')
+			}
 
 		},
 

@@ -6,12 +6,15 @@
                 <div class="form">
                     <h1>Đăng nhập</h1>
                     <div class="social-container">
-                        <a  class="social">AD</a>
+                        <a class="social">AD</a>
                         <a class="social">M</a>
-                        <a  class="social">IN</a>
+                        <a class="social">IN</a>
                     </div>
                     <input type="email" placeholder="Email" v-model="email" />
+                    <span v-if="!isValidEmail">Email không hợp lệ</span>
+                    <br />
                     <input type="password" placeholder="Password" v-model="password" />
+                    <span v-if="!isValidPassword">Mật khẩu không hợp lệ</span>
                     <button @click="login()">Đăng nhập</button>
                 </div>
 
@@ -30,6 +33,7 @@
     </div>
 </template>
 <script>
+
 export default {
     data() {
         return {
@@ -37,15 +41,23 @@ export default {
             password: ""
         }
     },
-  
+    computed: {
+        isValidEmail() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(this.email);
+        },
+        isValidPassword() {
+            return this.password.length >= 8;
+        },
+    },
     methods:
     {
         async login() {
-          
+
             axios.post(`${import.meta.env.VITE_API_BASE_URL}admin/login?email=${this.email}&password=${this.password}`)
-                .then( (response) =>{
+                .then((response) => {
                     if (response.data.status == 202) {
-                        this.$router.push({ name:'user'})
+                        this.$router.push({ name: 'user' })
                     }
                 });
 

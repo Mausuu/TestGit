@@ -18,16 +18,10 @@ class UserSeeder extends Seeder
        
         DB::table('users')->insert([
            ["name" => "demo2",
-            "email" => "demo122@gmail.com",
-            "password" => Hash::make("1tttt"),
+            "email" => "user@gmail.com",
+            "password" => Hash::make("user123456"),
             "avatar"=>"demo21.jpg",
             "url"   =>"http://127.0.0.1:8000/images/default.jpg"],
-
-            ["name" => "demo1",
-            "email" => "demo222@gmail.com",
-            "password" =>Hash::make("1233"),
-            "avatar"=>"demo212.jpg",
-            "url"   =>"http://127.0.0.1:8000/images/default.jpg"]
         ]  );   
     }
 }

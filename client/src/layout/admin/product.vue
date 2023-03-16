@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <input type="file" ref="imageInput" @change="uploadImage">
-  </div>
+  
     <br>
     <div class="container-fluid">
       <div class="">
@@ -23,7 +21,7 @@
                 <th>
                   <span class="custom-checkbox">
                     <input type="checkbox" id="selectAll">
-                    <label for="selectAll"></label>
+                    <label  for="selectAll"></label>
                   </span>
                 </th>
                 <th>Tên sản phẩm</th>
@@ -37,7 +35,7 @@
                 <td>
                   <span class="custom-checkbox">
                     <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                    <label for="checkbox1"></label>
+                    <label  for="checkbox1"></label>
                   </span>
                 </td>
                 <td>{{ product.name_product }}</td>
@@ -72,28 +70,41 @@
           </div>
           <div class="modal-body">
             <form @submit.prevent="saveProduct">
-              <label for="name_product">Tên sản phẩm:</label>
-              <input type="text" id="name_product" v-model="name_product" required>
+              <div class="form-group">
+              <label  for="name_product">Tên sản phẩm:</label>
+              <input class="form-control" type="text" id="name_product" v-model="name_product" required>
               <br>
+            </div>
+            <div class="form-group">
               <label for="price">Giá:</label>
-              <input type="number" id="price" v-model="price" required>
+              <input class="form-control" type="number" id="price" v-model="price" required>
               <br>
+            </div>
+            <div class="form-group">
               <label for="cat_id">Loại sản phẩm:</label>
-              <select id="cat_id" v-model="cat_id" required>
+              <select  id="cat_id" v-model="cat_id" required>
                 <option value="">Chọn loại sản phẩm</option>
                 <option v-for="category in categorys" :key="category.id" :value="category.id">{{ category.cat_name }}</option>
               </select>
               <br>
-              <label for="detail">Mô tả chi tiết:</label>
-              <textarea id="detail" v-model="detail" required></textarea>
+            </div>
+            <div class="form-group">
+              <label  for="detail">Mô tả chi tiết:</label>
+              <textarea class="form-control" id="detail" v-model="detail" required></textarea>
               <br>
-              <label for="quantity">Số lượng:</label>
-              <input type="number" id="quantity" v-model="quantity" required>
+            </div>
+            <div class="form-group">
+              <label  for="quantity">Số lượng:</label>
+              <input class="form-control" type="number" id="quantity" v-model="quantity" required>
               <br>
-              <label for="image">Hình ảnh:</label>
-              <input type="file" id="image" @change="onFileSelected">
+            </div>
+            <div class="form-group">
+              <label  for="image">Hình ảnh:</label>
+              <input class="form-control" type="file" id="image" @change="onFileSelected">
               <br>
-              <button type="submit" class="btn btn-secondary">Lưu sản phẩm</button>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-secondary">Lưu sản phẩm</button></div>  
             </form>
           </div>
           <div class="modal-footer">
@@ -115,16 +126,16 @@
             </div>
             <div class="modal-body">
               <div class="form-group">
-                <label>Tên sản phẩm:</label>
+                <label >Tên sản phẩm:</label>
                 <input type="text" class="form-control" required :placeholder=selectname_product
                   v-model="name_product">
               </div>
               <div class="form-group">
-                <label>Giá:</label>
+                <label >Giá:</label>
                 <input type="text" class="form-control" required :placeholder=selectProduct.price v-model="price">
               </div>
               <div class="form-group">
-                <label>Danh mục sản phẩm</label>
+                <label >Danh mục sản phẩm</label>
                 <form>
                   <select v-model="key" class="form-select" id="sel1" name="sellist1">
                     <option v-for="category in categorys" :placeholder="category.id">{{ category.cat_name }}</option>
@@ -133,7 +144,7 @@
               </div>
   
               <div class="form-group">
-                <label>Ảnh</label>
+                <label >Ảnh</label>
                 <input type="text" class="form-control" :placeholder=selectProduct.avatar required v-model="avatar">
               </div>
             </div>
